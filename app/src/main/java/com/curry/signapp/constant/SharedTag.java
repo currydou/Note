@@ -5,4 +5,6 @@ package com.curry.signapp.constant;
  */
 
 public class SharedTag {
+    public static final String SHAREDPREFERENCES_NAME = "my_location";
+
 }

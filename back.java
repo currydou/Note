@@ -1,16 +1,18 @@
 package com.curry.signapp.module.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -23,10 +25,17 @@ import com.baidu.mapapi.model.LatLng;
 import com.curry.signapp.R;
 import com.curry.signapp.adapter.LocationAdapter;
 import com.curry.signapp.bean.SimpleLocation;
+import com.curry.signapp.constant.Constants;
 import com.curry.signapp.db.LocationDao;
 
 import java.util.List;
 
+/**
+ * 备份
+ *
+ * 只在服务里获取经纬度，用广播更新UI，但是好像更新不及时
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
 
@@ -39,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private BitmapDescriptor mIconLocation;
 
     private boolean first = true;
-    private LocationClient mLocationClient;
-    private float mCurrentX;
+    private HomeReceiver homeReceiver;
 
 
     @Override
@@ -62,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: 2017/4/4 进程优先级问题
         initLocation();
+        //注册广播
+        registerHomeReceiver();
 
     }
 
@@ -73,25 +83,6 @@ public class MainActivity extends AppCompatActivity {
         MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
         mBaiduMap.setMapStatus(msu);
 
-        mLocationClient = new LocationClient(getApplicationContext());
-        //声明LocationClient类
-        mLocationClient.registerLocationListener(new MyLocationListener());
-        //注册监听函数
-
-        //配置定位参数
-        LocationClientOption option = new LocationClientOption();
-        //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-        //语义化信息
-        option.setIsNeedLocationDescribe(true);
-        //可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setScanSpan(3000);
-        //可选，默认false,设置是否使用gps
-        option.setOpenGps(true);
-        //可选，默认false，设置是否需要位置语义化结果
-        option.setIsNeedLocationDescribe(true);
-        mLocationClient.setLocOption(option);
-        mLocationClient.start();
         // 罗盘模式， 初始化图
         mIconLocation = BitmapDescriptorFactory.fromResource(R.mipmap.navi_map_gps_locked);
     }
@@ -106,34 +97,6 @@ public class MainActivity extends AppCompatActivity {
         mBaiduMap.animateMapStatus(msu);
     }
 
-    // 定位的监听
-    private class MyLocationListener implements BDLocationListener {
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-
-            MyLocationData data = new MyLocationData.Builder()//
-                    .direction(mCurrentX)// 罗盘模式，方向的设置
-                    .accuracy(location.getRadius())//
-                    .latitude(location.getLatitude())// 纬度
-                    .longitude(location.getLongitude())// 经度
-                    .build();
-            // 数据设置给map
-            mBaiduMap.setMyLocationData(data);
-            // 设置自定义图标（由圆点变成三角形），根据模式的不同更换图标
-            MyLocationConfiguration config = new MyLocationConfiguration(
-                    MyLocationConfiguration.LocationMode.NORMAL, true, mIconLocation);
-            mBaiduMap.setMyLocationConfigeration(config);
-
-            // 是否第一次进入，把当前位置设置为中心点
-            if (first) {
-                centerToMyLocation(location.getLatitude(), location.getLongitude());
-                first = false;
-            }
-//            Toast.makeText(MainActivity.this, location.getTime() + "经度：" + location.getLongitude() + "  纬度:"
-//                    + location.getLatitude(), Toast.LENGTH_SHORT).show();
-
-        }
-    }
 
     @Override
     protected void onStart() {
@@ -161,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         // 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+        //注销receiver
+        unregisterReceiver(homeReceiver);
     }
 
     public void onClick(View view) {
@@ -181,4 +146,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private class HomeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Location location = (Location) intent.getSerializableExtra("location");
+            if (first) {
+                MyLocationData data = new MyLocationData.Builder()//
+                        .latitude(location.getLatitude())// 纬度
+                        .longitude(location.getLongitude())// 经度
+                        .build();
+                // 数据设置给map
+                mBaiduMap.setMyLocationData(data);
+                // 设置自定义图标（由圆点变成三角形），根据模式的不同更换图标
+                MyLocationConfiguration config = new MyLocationConfiguration(
+                        MyLocationConfiguration.LocationMode.NORMAL, true, mIconLocation);
+                mBaiduMap.setMyLocationConfigeration(config);
+                first = false;
+            }
+            Toast.makeText(getApplicationContext(), "activity  经度：" + location.getLongitude() + "  纬度:"
+                    + location.getLatitude(), Toast.LENGTH_SHORT).show();
+            centerToMyLocation(location.getLatitude(), location.getLongitude());
+        }
+    }
+
+    private void registerHomeReceiver() {
+        homeReceiver = new HomeReceiver();
+        IntentFilter intentFilter = new IntentFilter(Constants.ACTION_HOMERECEIVER);
+        registerReceiver(homeReceiver, intentFilter);
+    }
 }
