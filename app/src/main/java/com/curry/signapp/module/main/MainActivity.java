@@ -90,8 +90,13 @@ public class MainActivity extends AppCompatActivity {
         option.setOpenGps(true);
         //可选，默认false，设置是否需要位置语义化结果
         option.setIsNeedLocationDescribe(true);
+
+        //可选，默认gcj02，设置返回的定位结果坐标系（--------》没有这个参数定位不准确，相关介绍还得看看）
+        option.setCoorType("bd09ll");
+        //可选，设置是否需要地址信息，默认不需要
+        option.setIsNeedAddress(true);
+
         mLocationClient.setLocOption(option);
-        mLocationClient.start();
         // 罗盘模式， 初始化图
         mIconLocation = BitmapDescriptorFactory.fromResource(R.mipmap.navi_map_gps_locked);
     }
@@ -138,8 +143,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // 允许定位图层
+        // 允许定位
         mBaiduMap.setMyLocationEnabled(true);
+        if (!mLocationClient.isStarted())
+            // 开启定位
+            mLocationClient.start();
     }
 
     @Override
@@ -154,6 +162,14 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         // 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 停止定位
+        mBaiduMap.setMyLocationEnabled(false);
+        mLocationClient.stop();
     }
 
     @Override

@@ -15,7 +15,7 @@ import com.curry.signapp.db.LocationDao;
 public class LocationService extends Service {
 
     //请求定位信息的间隔
-    public static final int SPAN = 61000;
+    public static final int SPAN = 6000;
 
     private LocationClient mLocationClient = null;
     private BDLocationListener myListener = new MyLocationListener();
@@ -64,14 +64,13 @@ public class LocationService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-
     // 定位的监听
     private class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
 //            Toast.makeText(getApplicationContext(), "service  经度：" + location.getLongitude() + "  纬度:"
 //                    + location.getLatitude(), Toast.LENGTH_SHORT).show();
-            if (location != null) {
+            if (location.getLatitude() != 0 && location.getLongitude() != 0) {
                 String mLongitude = location.getLongitude() + "";
                 String mLatitude = location.getLatitude() + "";
                 //保存到数据库
