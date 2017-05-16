@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.neenbedankt.android-apt'
+/*意思是所有的子项目或者所有的modules都可以从这个配置文件中读取内容。
+android节点读取ext中android对应项，dependencies读取dependencies对应项，如果配置有变化就可以只在config.gradle中修改，是不是很方便进行配置的管理呢？*/
+//apply from: "config.gradle"
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.1.0'
+    }
+}
+greendao {
+    schemaVersion 1
+    daoPackage 'com.curry.note.dao'
+    targetGenDir 'src/main/java'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.curry.note"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    //数据库
+    compile 'org.greenrobot:greendao:3.1.0'
+    compile 'org.greenrobot:greendao-generator:3.1.0'
+    //
+    testCompile 'junit:junit:4.12'
+    //空指针http://blog.csdn.net/panhongzhi02/article/details/60141377
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    //
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
+    //
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.squareup.okio:okio:1.13.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+}
+/*依赖冲突相关问题
+http://www.jianshu.com/p/8d02da77c83d
+https://docs.gradle.org/current/userguide/userguide_single.html#sec:listing_dependencies
+http://blog.csdn.net/u014137988/article/details/52588037
+最后因为下面两个的版本号改过，和之前的不一样
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+依赖报告： gradlew -q app:dependencies
+
+
+
+Error:Execution failed for task ':app:transformClassesWithJarMergingForDebug'.
+> com.android.build.api.transform.TransformException: java.util.zip.ZipException: duplicate entry: android/support/v4/os/BuildCompat.class
+*/

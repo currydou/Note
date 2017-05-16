@@ -1,0 +1,21 @@
+﻿
+先看豆瓣的api-->搭框架，retrofit rx ，dagger2??。。。
+    先用不封装的
+    参考：supermvp，wewinmvp，androidmvpsample，clouderreader，mvp，星巴克
+          有rx/没有rx  mvp     都有，封装再参考    都有         mvp  也有
+书,音乐,电影
+天气预报（之前见过的用天气的）
+
+其他api（看看有什么想用的）
+
+bmob
+新的控件
+新的自定义的控件，比如微信联系人
+每个技术可以都用一下，比如感觉用不是每个地方都能用到mvp，那就只用一次，一般的还是用controller这种方式 
+
+一般的：controller，
+用一次的：mvp，databinding，rx
+
+各种新控件
+
+
