@@ -7,4 +7,6 @@ package com.curry.note.constant;
 public class Constants {
 
     public static final String BASE_URL = "";
+    public static final String DOUBAN_BASE_URL = "https://api.douban.com/";
+
 }

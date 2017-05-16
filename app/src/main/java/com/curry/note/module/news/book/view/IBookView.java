@@ -1,13 +1,13 @@
 package com.curry.note.module.news.book.view;
 
-import com.curry.note.bean.User;
+import com.curry.note.bean.BookBean;
 
 /**
  * Created by curry.zhang on 5/16/2017.
  */
 
 public interface IBookView {
-    void showSuccessPage(User user);
+    void showSuccessPage(BookBean bookBean);
 
     void showFailPage();
 }

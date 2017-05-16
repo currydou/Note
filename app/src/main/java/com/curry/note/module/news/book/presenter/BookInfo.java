@@ -5,5 +5,5 @@ package com.curry.note.module.news.book.presenter;
  */
 
 public interface BookInfo {
-    void getList();
+    void getList(String tag,int start,int count);
 }

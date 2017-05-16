@@ -1,6 +1,8 @@
 package com.curry.note.module.news.book.presenter;
 
-import com.curry.note.bean.User;
+import android.util.Log;
+
+import com.curry.note.bean.BookBean;
 import com.curry.note.constant.Constants;
 import com.curry.note.module.news.book.view.IBookView;
 import com.curry.note.module.news.net.BookService;
@@ -26,24 +28,25 @@ public class BookInfoImpl implements BookInfo {
 
     // TODO: 5/16/2017  先用retrofit，再改成rx，再封装
     @Override
-    public void getList(/*具体的参数需要看豆瓣api的接口*/) {
+    public void getList(String tag,int start,int count) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.DOUBAN_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         BookService bookService = retrofit.create(BookService.class);
-        Call<User> call = bookService.getString("", "15261595841");
-        call.enqueue(new Callback<User>() {
+        Call<BookBean> call = bookService.getBook(tag, start, count);
+        call.enqueue(new Callback<BookBean>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<BookBean> call, Response<BookBean> response) {
                 // TODO: 5/16/2017  这个地方不同情形的判断
                 iBookView.showSuccessPage(response.body());
-
+                Log.e("curry", "onResponse: ");
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<BookBean> call, Throwable t) {
                 iBookView.showFailPage();
+                Log.e("curry", "onFailure: ");
             }
         });
     }
