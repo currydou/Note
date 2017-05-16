@@ -1,4 +1,0 @@
-<resources>
-    <string name="app_name">SignApp</string>
-    <string name="toast_error_net">网络错误</string>
-</resources>
