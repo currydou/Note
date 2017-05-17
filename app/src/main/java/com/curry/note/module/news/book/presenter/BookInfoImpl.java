@@ -2,10 +2,10 @@ package com.curry.note.module.news.book.presenter;
 
 import android.util.Log;
 
-import com.curry.note.bean.BookBean;
+import com.curry.note.bean.BookRoot;
 import com.curry.note.constant.Constants;
 import com.curry.note.module.news.book.view.IBookView;
-import com.curry.note.module.news.net.BookService;
+import com.curry.note.module.news.net.DouBanService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,18 +33,18 @@ public class BookInfoImpl implements BookInfo {
                 .baseUrl(Constants.DOUBAN_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        BookService bookService = retrofit.create(BookService.class);
-        Call<BookBean> call = bookService.getBook(tag, start, count);
-        call.enqueue(new Callback<BookBean>() {
+        DouBanService douBanService = retrofit.create(DouBanService.class);
+        Call<BookRoot> call = douBanService.getBook(tag, start, count);
+        call.enqueue(new Callback<BookRoot>() {
             @Override
-            public void onResponse(Call<BookBean> call, Response<BookBean> response) {
+            public void onResponse(Call<BookRoot> call, Response<BookRoot> response) {
                 // TODO: 5/16/2017  这个地方不同情形的判断
                 iBookView.showSuccessPage(response.body());
                 Log.e("curry", "onResponse: ");
             }
 
             @Override
-            public void onFailure(Call<BookBean> call, Throwable t) {
+            public void onFailure(Call<BookRoot> call, Throwable t) {
                 iBookView.showFailPage();
                 Log.e("curry", "onFailure: ");
             }

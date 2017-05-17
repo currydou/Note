@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.curry.note.R;
+import com.curry.note.module.news.movie.view.MovieFragment;
+import com.curry.note.module.news.music.view.MusicFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +24,7 @@ public class NewsActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottomNavigationBar;
 
-    private BookFragment bookFragment;
+    private DouBanFragment bookFragment;
     private MusicFragment musicFragment;
     private MovieFragment movieFragment;
 
@@ -54,7 +56,7 @@ public class NewsActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         if (bookFragment == null) {
-                            bookFragment = BookFragment.getInstance("书");
+                            bookFragment = DouBanFragment.getInstance("书");
                         }
                         transaction.replace(R.id.flNewsContent, bookFragment);
                         break;
@@ -94,7 +96,7 @@ public class NewsActivity extends AppCompatActivity {
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        bookFragment = BookFragment.getInstance("书");
+        bookFragment = DouBanFragment.getInstance("书");
         transaction.replace(R.id.flNewsContent, bookFragment);
         transaction.commit();
     }

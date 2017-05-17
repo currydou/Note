@@ -1,9 +1,15 @@
 ﻿
-先看豆瓣的api-->搭框架，retrofit rx ，dagger2??。。。
+先看豆瓣的api-->搭框架，           retrofit rx ，   （dagger2??。。。）
     先用不封装的
-    参考：supermvp，wewinmvp，androidmvpsample，clouderreader，mvp，星巴克
-          有rx/没有rx  mvp     都有，封装再参考    都有         mvp  也有
+    参考：supermvp，              都有          retrofit 封装; retrofit+rx 没封装
+          androidmvpsample，      都有，        封装
+          wewinmvp                mvp
+          banya                   都有，        同一
+          星巴克 ，               也有
+          mvp，                   mvp
+          clouderreader，         都有          同一
 书,音乐,电影
+
 天气预报（之前见过的用天气的）
 
 其他api（看看有什么想用的）
@@ -18,4 +24,6 @@ bmob
 
 各种新控件
 
+webview   js
 
+权限适配(6.0  7.0 )
