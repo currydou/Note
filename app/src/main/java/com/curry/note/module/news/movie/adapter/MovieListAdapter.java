@@ -53,8 +53,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         if (!TextUtils.isEmpty(subjects.getTitle())) {
             holder.itemTvFilm.setText(subjects.getTitle());
         }
+        if (!TextUtils.isEmpty(subjects.getRating().getStars())) {
+            holder.itemTvFilmGrade.setText("评分:" + subjects.getRating().getStars());
+        }
         if (!TextUtils.isEmpty(subjects.getOriginal_title())) {
-            holder.itemTvFilmGrade.setText("评分:" + subjects.getOriginal_title());
+            holder.itemTvFilmEnglish.setText(subjects.getOriginal_title());
         }
         if (position < 9) {
             holder.itemTvRank.setText("0" + (position + 1));
