@@ -77,7 +77,7 @@ public class MovieFragment extends Fragment implements IMovieView {
     @Override
     public void onSuccess(Object data) {
         movieListAdapter.setData(((Root) data).getSubjects());
-    }
+    }电影没显示好
 
     @Override
     public void onFailure(Throwable t) {
