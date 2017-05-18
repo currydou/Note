@@ -2,7 +2,7 @@ package com.curry.note.daomanager;
 
 import android.content.Context;
 
-import com.curry.note.bean.Note;
+import com.curry.note.bean.bmob.Note;
 
 import java.util.List;
 

@@ -1,16 +1,18 @@
-package com.curry.note.bean;
+package com.curry.note.bean.bmob;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Generated;
 
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by curry on 2017/5/14.
  */
 
 @Entity
-public class User {
+public class User extends BmobUser{
     @Id
     private Long id;
     private String name;

@@ -2,6 +2,7 @@ package com.curry.note;
 
 import android.app.Application;
 
+import com.curry.note.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 /**
@@ -15,5 +16,7 @@ public class NoteApplication extends Application {
         super.onCreate();
         Fresco.initialize(this);
 
+        // TODO: 5/18/2017  这个工具类要项目依赖
+        Utils.init(this);
     }
 }

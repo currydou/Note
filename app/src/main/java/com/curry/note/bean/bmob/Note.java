@@ -1,9 +1,11 @@
-package com.curry.note.bean;
+package com.curry.note.bean.bmob;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Generated;
+
+import cn.bmob.v3.BmobObject;
 
 /**
  *
@@ -11,7 +13,7 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 
 @Entity
-public class Note {
+public class Note extends BmobObject{
     @Id
     private Long id;
     private String userName;
@@ -27,6 +29,12 @@ public class Note {
         this.id = id;
     }
     public Note() {
+    }
+
+    public Note(Long id, String noteContent, Long timestamp) {
+        this.id = id;
+        this.noteContent = noteContent;
+        this.timestamp = timestamp;
     }
 
     public Note(Long id, String userName, String title, String noteContent, Long timestamp, int tempUsageCount) {

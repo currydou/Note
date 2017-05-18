@@ -2,7 +2,7 @@ package com.curry.note.daomanager;
 
 import android.content.Context;
 
-import com.curry.note.bean.User;
+import com.curry.note.bean.bmob.User;
 import com.curry.note.dao.UserDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;

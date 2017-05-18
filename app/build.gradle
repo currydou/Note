@@ -58,15 +58,28 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
     //
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.squareup.okio:okio:1.13.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'com.google.code.gson:gson:2.6.2'
+//    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+//    compile 'com.squareup.okio:okio:1.13.0'
+    compile('com.squareup.retrofit2:retrofit:2.1.0'){
+        exclude group: 'com.squareup.okhttp3' }
+    compile('com.squareup.retrofit2:converter-gson:2.1.0'){
+                exclude group: 'com.google.code.gson'
+                exclude group: 'com.squareup.okhttp3'
+            }
+    compile('com.squareup.retrofit2:adapter-rxjava:2.1.0'){
+                exclude group: 'io.reactivex'
+                exclude group: 'com.squareup.okhttp3'
+            }
+//    compile 'io.reactivex:rxandroid:1.1.0'
+//    compile 'io.reactivex:rxjava:1.1.0'
+//    compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.facebook.fresco:fresco:0.12.0'
+    //
+    compile 'cn.bmob.android:http-legacy:1.0'
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    //3.5.5：请务必查看下面注释[1]
+    compile 'cn.bmob.android:bmob-sdk:3.5.5'
+
 
 }
 /*依赖冲突相关问题
@@ -85,4 +98,7 @@ Unable to create call adapter for rx.Observable<com.curry.note.bean.MusicRoot>
 no such error retrofit2.isSuccess
 版本号是否一致，是否是比较新的版本
 http://blog.csdn.net/jdsjlzx/article/details/51385919
+
+bmob sdk依赖 okhttp rx gson 所以项目中要是也用到了这些，就会重复，除掉就可以
+这里注释掉的是项目直接依赖的okhttp rx gson  (本来以为这样就行了，但是还要剔除掉retrofit里面的)
 */

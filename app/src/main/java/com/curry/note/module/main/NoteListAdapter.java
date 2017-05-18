@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.curry.note.R;
-import com.curry.note.bean.Note;
+import com.curry.note.bean.bmob.Note;
 import com.curry.note.util.TimeUtil;
 
 import java.util.List;

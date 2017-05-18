@@ -15,7 +15,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.curry.note.R;
-import com.curry.note.bean.Note;
+import com.curry.note.bean.bmob.Note;
+import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
 import com.curry.note.module.news.home.NewsActivity;
 
@@ -65,14 +66,17 @@ public class NoteListActivity extends AppCompatActivity {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NoteListActivity.this, NoteEditActivity.class));
+                Intent intent = new Intent(NoteListActivity.this, NoteEditActivity.class);
+                intent.putExtra(SharedTag.TYPE, SharedTag.TYPE_ADD_NOTE);
+                startActivity(intent);
             }
         });
         noteListAdapter.setOnItemClickListener(new NoteListAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int position, Note note) {
                 Intent intent = new Intent();
-                intent.putExtra("note_id", note.getId());
+                intent.putExtra(SharedTag.NOTE_ID, note.getId());
+                intent.putExtra(SharedTag.TYPE, SharedTag.TYPE_EDIT_NOTE);
                 intent.setClass(NoteListActivity.this, NoteEditActivity.class);
                 startActivity(intent);
             }
