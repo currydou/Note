@@ -3,24 +3,24 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_1"
+            android:id="@+id/nav_3"
             android:title="Home" />
         <item
             android:id="@+id/nav_2"
-            android:title="Messages" />
-        <item
-            android:id="@+id/nav_3"
-            android:title="Friends" />
+            android:title="换肤" />
         <item
             android:id="@+id/nav_discussion"
-            android:title="Discussion" />
+            android:title="设置" />
+        <item
+            android:id="@+id/nav_1"
+            android:title="娱乐" />
     </group>
 
-    <item android:title="Sub items">
+    <!--<item android:title="Sub items">
         <menu>
             <item android:title="Sub item 1" />
             <item android:title="Sub item 2" />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

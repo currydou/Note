@@ -1,11 +1,13 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- 找不到这个主题（Theme.AppCompat.Light.NoActionBar），但是能运行。把gradle插件的版本从2.3改回2.2 就好了
+            as找不到这个主题的影响是，不能再布局文件的preview中预览-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
 
 </resources>

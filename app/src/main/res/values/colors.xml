@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <!--todo 颜色文件以模块为主，还是以颜色为主，-->
+    <color name="colorPrimary">#31a7c8</color>
+    <color name="colorPrimaryDark">#80b9cf</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorInActive">#7FFFD4</color>

@@ -1,4 +1,6 @@
 ﻿
+便签的期望：界面简洁，大方；轻暗色调
+
 先看豆瓣的api-->搭框架，           retrofit rx ，   （dagger2??。。。）
     先用不封装的
     参考：supermvp，              都有          retrofit 封装; retrofit+rx 没封装

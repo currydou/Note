@@ -71,16 +71,15 @@ public class NoteEditActivity extends AppCompatActivity {
             //新增类型，退出之后不是空就保存本地和服务器
             if (!TextUtils.isEmpty(etNoteContent)) {
                 //不是空，并且修改过内容
-                saveLocalAndServer();相同的内容还是增加
+                saveLocalAndServer();
             }
         }
         if (operateType == SharedTag.TYPE_EDIT_NOTE) {
-            //编辑类型，退出之后不是空就保存更新，是空就删掉之前的note
-            if (!TextUtils.isEmpty(etNoteContent) && isModified()) {
+            //编辑类型，退出之后不是空就保存更新;删掉之前的note
+            if (!TextUtils.isEmpty(etNoteContent)) {
                 saveLocalAndServer();
-            } else {
-                deleteLocal();
             }
+            deleteOldNote();
         }
 
     }
@@ -88,8 +87,7 @@ public class NoteEditActivity extends AppCompatActivity {
     //内容是否改变
     private boolean isModified() {
         Note note = noteDaoUtil.queryOne(note_id);
-
-        return etNoteContent.equals(note.getNoteContent());
+        return !etNoteContent.equals(note.getNoteContent());
     }
 
     private void saveLocalAndServer() {
@@ -101,7 +99,7 @@ public class NoteEditActivity extends AppCompatActivity {
         saveServer(note);
     }
 
-    private void deleteLocal() {
+    private void deleteOldNote() {
         //删掉原来的
         Note note = new Note();
         note.setId(note_id);

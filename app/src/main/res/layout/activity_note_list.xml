@@ -8,29 +8,38 @@
     android:orientation="vertical"
     tools:context="com.curry.note.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <!--todo 去掉或改一下，toolbar左边的字；用coordinator；沉浸式模式-->
         <include layout="@layout/toolbar" />
 
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvNoteList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolBar" />
 
-    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/add" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        app:menu="@menu/menu"
-        app:headerLayout="@layout/header_layout" />
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/menu" />
 
 
 </android.support.v4.widget.DrawerLayout>

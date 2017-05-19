@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context="com.curry.note.module.main.NoteEditActivity">
 
-    <include layout="@layout/toolbar" />
 
     <EditText
         android:id="@+id/etNote"

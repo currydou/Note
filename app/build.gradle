@@ -45,6 +45,7 @@ dependencies {
     })
     //
     compile 'com.android.support:appcompat-v7:25.1.0'
+//    compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     //数据库
     compile 'org.greenrobot:greendao:3.1.0'
@@ -60,16 +61,17 @@ dependencies {
     //
 //    compile 'com.squareup.okhttp3:okhttp:3.8.0'
 //    compile 'com.squareup.okio:okio:1.13.0'
-    compile('com.squareup.retrofit2:retrofit:2.1.0'){
-        exclude group: 'com.squareup.okhttp3' }
-    compile('com.squareup.retrofit2:converter-gson:2.1.0'){
-                exclude group: 'com.google.code.gson'
-                exclude group: 'com.squareup.okhttp3'
-            }
-    compile('com.squareup.retrofit2:adapter-rxjava:2.1.0'){
-                exclude group: 'io.reactivex'
-                exclude group: 'com.squareup.okhttp3'
-            }
+    compile('com.squareup.retrofit2:retrofit:2.1.0') {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    compile('com.squareup.retrofit2:converter-gson:2.1.0') {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.okhttp3'
+    }
+    compile('com.squareup.retrofit2:adapter-rxjava:2.1.0') {
+        exclude group: 'io.reactivex'
+        exclude group: 'com.squareup.okhttp3'
+    }
 //    compile 'io.reactivex:rxandroid:1.1.0'
 //    compile 'io.reactivex:rxjava:1.1.0'
 //    compile 'com.google.code.gson:gson:2.6.2'

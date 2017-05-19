@@ -11,6 +11,7 @@ import com.curry.note.R;
 import com.curry.note.bean.bmob.Note;
 import com.curry.note.util.TimeUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -94,6 +95,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
     }
 
     public void setData(List<Note> noteList) {
+        Collections.reverse(noteList);
         this.noteList = noteList;
         notifyDataSetChanged();
     }
