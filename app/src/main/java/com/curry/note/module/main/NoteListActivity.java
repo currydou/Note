@@ -20,6 +20,7 @@ import com.curry.note.bean.bmob.Note;
 import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
 import com.curry.note.module.news.home.NewsActivity;
+import com.curry.note.util.BarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,10 @@ public class NoteListActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
         }
+        //这个工具类的颜色要把颜色写在这里才行
+        BarUtils.setColor(this, 0xff80b9cf);//0xFFFF0000
         noteDaoUtil = new NoteDaoUtil(this);
         noteListAdapter = new NoteListAdapter(this, noteList);
         rvNoteList.setAdapter(noteListAdapter);
