@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--default-->
+    <color name="color_main_list_text">@color/colorPrimaryDark</color>
+
+    <color name="bg_change_config_activity">@color/colorPrimaryDark</color>
+
+    <color name="color_display_content_text">@color/colorPrimaryDark</color>
+    <color name="color_display_content_background">@color/colorPrimaryDark</color>
+
+    <color name="color_lack_some_resource_text">@color/colorPrimaryDark</color>
+
+    <color name="status_bar_color">@color/colorPrimaryDark</color>
+</resources>

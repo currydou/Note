@@ -5,5 +5,9 @@
     android:layout_marginTop="50dp"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@mipmap/note_icon" />
 
 </LinearLayout>

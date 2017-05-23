@@ -2,12 +2,12 @@ package com.curry.note.module.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 
 import com.curry.note.R;
+import com.curry.note.base.BaseActivity;
 import com.curry.note.bean.bmob.Note;
 import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
@@ -17,14 +17,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class NoteEditActivity extends AppCompatActivity {
+public class NoteEditActivity extends BaseActivity {
 
     @BindView(R.id.etNote)
     EditText etNote;
@@ -37,8 +36,6 @@ public class NoteEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
-        //第一：默认初始化
-        Bmob.initialize(this, "be37ef7cc39a53617c68dddd3187f8b0");
         ButterKnife.bind(this);
 
         noteDaoUtil = new NoteDaoUtil(this);

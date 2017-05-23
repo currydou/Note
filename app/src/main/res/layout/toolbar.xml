@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/andSkin"
     android:id="@+id/toolBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/bg_image_selector"
+    android:minHeight="?attr/actionBarSize"
+    app:navigationIcon="@drawable/ic_menu"
+    skin:enable="true">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -14,12 +19,12 @@
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/tvAdd"
+        android:id="@+id/tvSyncToLocal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:layout_marginRight="15dp"
-        android:text="@string/addNote"
+        android:text="@string/syncToLocal"
         android:textSize="15sp"
         android:visibility="gone" />
 

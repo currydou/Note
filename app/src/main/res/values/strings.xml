@@ -3,6 +3,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title">个人便签</string>
-    <string name="addNote">增加</string>
+    <string name="syncToLocal">同步到本地</string>
     <string name="writeSomething">写点什么</string>
 </resources>
