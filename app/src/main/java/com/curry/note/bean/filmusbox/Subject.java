@@ -1,11 +1,17 @@
-package com.curry.note.bean.top250;
+package com.curry.note.bean.filmusbox;
+
+
+import com.curry.note.bean.top250.Casts;
+import com.curry.note.bean.top250.Directors;
+import com.curry.note.bean.top250.Images;
+import com.curry.note.bean.top250.Rating;
 
 import java.util.List;
 
 /**
- * Created by forezp on 16/9/20.
+ * Created by forezp on 16/9/25.
  */
-public class Subjects {
+public class Subject {
     private Rating rating;
 
     private List<String> genres ;

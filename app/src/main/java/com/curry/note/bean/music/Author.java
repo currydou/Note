@@ -1,4 +1,4 @@
-package com.curry.note.bean;
+package com.curry.note.bean.music;
 
 /**
  * Created by forezp on 16/9/30.

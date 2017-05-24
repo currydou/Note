@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * 这一种每次可见的时候都会加载
+ */
 public abstract class LazyFragment2 extends Fragment {
 
     // 标志位，标志已经初始化完成，因为setUserVisibleHint是在onCreateView之前调用的，

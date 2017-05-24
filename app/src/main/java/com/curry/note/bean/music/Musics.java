@@ -1,4 +1,4 @@
-package com.curry.note.bean;
+package com.curry.note.bean.music;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class Musics {
 
-    // TODO: 5/17/2017  bean分包
     private Rating rating=new Rating();
 
     private List<Author> author=new ArrayList<>() ;

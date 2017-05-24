@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.curry.note.R;
-import com.curry.note.bean.Musics;
+import com.curry.note.bean.music.Musics;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;

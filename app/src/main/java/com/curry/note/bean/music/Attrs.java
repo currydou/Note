@@ -1,4 +1,4 @@
-package com.curry.note.bean;
+package com.curry.note.bean.music;
 
 import java.util.List;
 

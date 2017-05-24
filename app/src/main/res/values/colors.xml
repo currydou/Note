@@ -7,6 +7,11 @@
 
     <color name="colorInActive">#7FFFD4</color>
     <color name="colorBarBg">#FFA07A</color>
+    <color name="colorTheme">#ffce3d3a</color>
+    <color name="colorTitle">#666</color>
+    <color name="colorContent">#ff333333</color>
+    <!--没有水波纹效果的颜色选择器-->
+    <color name="colorItemBackground">#d9d9d9</color>
 
     <color name="text_gray_9">#999999</color>
     <color name="text_gray_6">#666666</color>

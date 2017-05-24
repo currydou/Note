@@ -1,7 +1,7 @@
 package com.curry.note.module.news.music.presenter;
 
 
-import com.curry.note.bean.MusicRoot;
+import com.curry.note.bean.music.MusicRoot;
 import com.curry.note.constant.Constants;
 import com.curry.note.module.news.music.view.IMusicView;
 import com.curry.note.module.news.net.DouBanService;

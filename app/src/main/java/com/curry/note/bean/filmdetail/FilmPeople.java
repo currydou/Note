@@ -1,10 +1,12 @@
-package com.curry.note.bean.top250;
+package com.curry.note.bean.filmdetail;
+
+
+import com.curry.note.bean.top250.Avatars;
 
 /**
- * Created by forezp on 16/9/20.
+ * Created by forezp on 16/9/25.
  */
-public class Directors {
-
+public class FilmPeople {
     private String alt;
 
     private Avatars avatars;
@@ -12,6 +14,15 @@ public class Directors {
     private String name;
 
     private String id;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getAlt() {
         return alt;

@@ -1,8 +1,7 @@
 package com.curry.note.module.news.music.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.curry.note.R;
-import com.curry.note.bean.MusicRoot;
-import com.curry.note.bean.Musics;
+import com.curry.note.base.LazyBaseFragment2;
+import com.curry.note.bean.music.MusicRoot;
+import com.curry.note.bean.music.Musics;
 import com.curry.note.module.news.music.adapter.MusicListAdapter;
 import com.curry.note.module.news.music.presenter.MusicInfo;
 import com.curry.note.module.news.music.presenter.MusicInfoImpl;
@@ -27,7 +27,7 @@ import butterknife.Unbinder;
  * Created by curry.zhang on 5/16/2017.
  */
 
-public class MusicFragment extends Fragment implements IMusicView<MusicRoot> {
+public class MusicFragment extends LazyBaseFragment2 implements IMusicView<MusicRoot> {
 
     @BindView(R.id.recyclerViewMusic)
     RecyclerView recyclerViewMusic;
@@ -43,22 +43,33 @@ public class MusicFragment extends Fragment implements IMusicView<MusicRoot> {
         return musicFragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initDatas() {
+
+    }
+
+    @Override
+    protected void lazyLoad() {
         MusicInfo musicInfo = new MusicInfoImpl(this);
 
         musicListAdapter = new MusicListAdapter(getActivity(), musicsList);
         recyclerViewMusic.setAdapter(musicListAdapter);
         recyclerViewMusic.setLayoutManager(new LinearLayoutManager(getActivity()));
+        musicListAdapter.setOnItemClickListener(new MusicListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position, Musics musics) {
+                Intent intent = new Intent(getActivity(), MusicDetailActivity.class);
+                intent.putExtra("id", musics.getId());
+                startActivity(intent);
+            }
+        });
 
         musicInfo.getList("流行", 0, 20);
     }
@@ -83,4 +94,6 @@ public class MusicFragment extends Fragment implements IMusicView<MusicRoot> {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

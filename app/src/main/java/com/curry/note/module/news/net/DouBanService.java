@@ -1,9 +1,11 @@
 package com.curry.note.module.news.net;
 
 
-import com.curry.note.bean.BookRoot;
-import com.curry.note.bean.MusicRoot;
-import com.curry.note.bean.Musics;
+import com.curry.note.bean.book.BookRoot;
+import com.curry.note.bean.book.Books;
+import com.curry.note.bean.filmdetail.FilmDetail;
+import com.curry.note.bean.music.MusicRoot;
+import com.curry.note.bean.music.Musics;
 import com.curry.note.bean.top250.Root;
 
 import retrofit2.Call;
@@ -34,8 +36,8 @@ public interface DouBanService {
     @GET("v2/book/search")
     Call<BookRoot> getBook(@Query("tag") String tag, @Query("start") int start, @Query("count") int count);
 
-//    @GET("v2/book/{id}")
-//    Observable<BookDetailBean> getBookDetail(@Path("id") String id);
+    @GET("v2/book/{id}")
+    Call<Books> getBookDetail(@Path("id") String id);
 
 
     /**
@@ -49,7 +51,7 @@ public interface DouBanService {
     Observable<MusicRoot> searchMusicByTag(@Query("tag") String tag, @Query("start") int start, @Query("count") int count);
 
     @GET("v2/music/{id}")
-    Observable<Musics> getMusicDetail(@Path("id") String id);
+    Call<Musics> getMusicDetail(@Path("id") String id);
 
 
     /**
@@ -61,4 +63,7 @@ public interface DouBanService {
 
     @GET("v2/movie/top250")
     Observable<Root> getTop250(@Query("start")int start, @Query("count")int count);
+
+    @GET("v2/movie/subject/{id}")
+    Call<FilmDetail> getFilmDetail(@Path("id") String id);
 }

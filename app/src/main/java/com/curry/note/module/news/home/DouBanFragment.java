@@ -42,9 +42,7 @@ public class DouBanFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         bookAdapter = new BookAdapter(getChildFragmentManager());
-
 
     }
 
@@ -66,6 +64,7 @@ public class DouBanFragment extends Fragment {
 
         //viewpager加载adapter
         vpBook.setAdapter(bookAdapter);
+        vpBook.setOffscreenPageLimit(3);
         //tab_FindFragment_title.setViewPager(vp_FindFragment_pager);
         //TabLayout加载viewpager
         tabLayoutBook.setupWithViewPager(vpBook);

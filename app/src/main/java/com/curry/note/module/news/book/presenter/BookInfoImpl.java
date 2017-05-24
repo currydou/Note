@@ -2,7 +2,7 @@ package com.curry.note.module.news.book.presenter;
 
 import android.util.Log;
 
-import com.curry.note.bean.BookRoot;
+import com.curry.note.bean.book.BookRoot;
 import com.curry.note.constant.Constants;
 import com.curry.note.module.news.book.view.IBookView;
 import com.curry.note.module.news.net.DouBanService;

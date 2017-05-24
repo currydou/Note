@@ -1,4 +1,4 @@
-package com.curry.note.bean;
+package com.curry.note.bean.book;
 
 import java.io.Serializable;
 

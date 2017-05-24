@@ -1,11 +1,14 @@
-package com.curry.note.bean.top250;
+package com.curry.note.bean.filmlive;
+
+
+import com.curry.note.bean.top250.Subjects;
 
 import java.util.List;
 
 /**
- * Created by forezp on 16/9/20.
+ * Created by forezp on 16/9/22.
  */
-public class Root {
+public class FilmLive {
 
     private int count;
 
@@ -55,16 +58,5 @@ public class Root {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return "Root{" +
-                "count=" + count +
-                ", start=" + start +
-                ", total=" + total +
-                ", subjects=" + subjects +
-                ", title='" + title + '\'' +
-                '}';
     }
 }

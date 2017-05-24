@@ -1,8 +1,7 @@
 package com.curry.note.module.news.movie.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.curry.note.R;
+import com.curry.note.base.LazyBaseFragment2;
 import com.curry.note.bean.top250.Root;
 import com.curry.note.bean.top250.Subjects;
 import com.curry.note.module.news.movie.adapter.MovieListAdapter;
@@ -27,7 +27,7 @@ import butterknife.Unbinder;
  * Created by curry.zhang on 5/16/2017.
  */
 
-public class MovieFragment extends Fragment implements IMovieView {
+public class MovieFragment extends LazyBaseFragment2 implements IMovieView {
 
     @BindView(R.id.recyclerViewMovie)
     RecyclerView recyclerViewMovie;
@@ -44,19 +44,31 @@ public class MovieFragment extends Fragment implements IMovieView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
+    @Override
+    protected void initDatas() {
+
+    }
+
+    @Override
+    protected void lazyLoad() {
         movieListAdapter = new MovieListAdapter(getActivity(), subjectsList);
         recyclerViewMovie.setAdapter(movieListAdapter);
         recyclerViewMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
+        movieListAdapter.setOnItemClickListener(new MovieListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position, Subjects subjects) {
+                Intent intent = new Intent(getActivity(), FilmDetailActivity.class);
+                intent.putExtra("id", subjects.getId());
+                startActivity(intent);
+            }
+        });
 
         IMoviePresenter iMoviePresenter = new MoviePresenterImpl(this);
         iMoviePresenter.getList("d", 0, 20);
@@ -68,6 +80,7 @@ public class MovieFragment extends Fragment implements IMovieView {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 
     @Override
     public void onFinish() {

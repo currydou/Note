@@ -1,15 +1,15 @@
-package com.curry.note.bean.top250;
+package com.curry.note.bean.music;
 
 /**
- * Created by forezp on 16/9/20.
+ * Created by forezp on 16/9/30.
  */
 public class Rating {
 
     private int max;
 
-    private double average;
+    private String average;
 
-    private String stars;
+    private int numRaters;
 
     private int min;
 
@@ -21,20 +21,20 @@ public class Rating {
         this.max = max;
     }
 
-    public double getAverage() {
+    public String getAverage() {
         return average;
     }
 
-    public void setAverage(double average) {
+    public void setAverage(String average) {
         this.average = average;
     }
 
-    public String getStars() {
-        return stars;
+    public int getNumRaters() {
+        return numRaters;
     }
 
-    public void setStars(String stars) {
-        this.stars = stars;
+    public void setNumRaters(int numRaters) {
+        this.numRaters = numRaters;
     }
 
     public int getMin() {

@@ -1,5 +1,7 @@
-package com.curry.note.bean;
+package com.curry.note.bean.book;
 
+
+import com.curry.note.bean.top250.Images;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * Created by forezp on 16/9/26.
  */
-public class Books implements Serializable {
+public class Books  implements Serializable {
     private Rating rating;
 
     private String subtitle;

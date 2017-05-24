@@ -77,7 +77,7 @@ public class NoteListActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
-            //同样的图片，同样的分辨率下，mipmap里的和drawable里的显示的大小不一样
+            // TODO: 5/24/2017  同样的图片，同样的分辨率下，mipmap里的和drawable里的显示的大小不一样
             //写在布局文件里了
 //            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 //            actionBar.setDisplayHomeAsUpEnabled(true);
