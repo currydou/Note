@@ -23,7 +23,7 @@ public class MoviePresenterImpl implements IMoviePresenter {
     }
 
     @Override
-    public void getList(String tag, int start, int count) {
+    public void getList(String tag, int start, int count, final boolean isLoadMore) {
         DouBanService douBanService = DouBanService.Buidler.getDouBanService();
         Observable<Root> observable = douBanService.getTop250(start, count);
         observable.subscribeOn(Schedulers.io())
@@ -31,7 +31,7 @@ public class MoviePresenterImpl implements IMoviePresenter {
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        iMovieView.onStart();
+                        iMovieView.onRequestStart();
                     }
                 }).subscribe(new Subscriber<Root>() {
             @Override
@@ -48,7 +48,7 @@ public class MoviePresenterImpl implements IMoviePresenter {
             @Override
             public void onNext(Root root) {
                 if (root != null) {
-                    iMovieView.onSuccess(root);
+                    iMovieView.onSuccess(root, isLoadMore);
                 } else {
                     iMovieView.onFailure(new Exception());//new 一个exception？
                 }

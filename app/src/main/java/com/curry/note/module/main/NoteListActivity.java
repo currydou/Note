@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.curry.note.R;
@@ -21,8 +22,10 @@ import com.curry.note.base.BaseActivity;
 import com.curry.note.bean.bmob.Note;
 import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
+import com.curry.note.module.login.LoginActivity;
 import com.curry.note.module.news.home.NewsActivity;
 import com.curry.note.widget.dialog.CardPickerDialog;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.rrtoyewx.andskinlibrary.manager.SkinLoader;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -38,7 +42,7 @@ import cn.bmob.v3.listener.FindListener;
  * 这个activity的功能列表
  * 1.进来的时候要更新便签列表
  */
-public class NoteListActivity extends BaseActivity {
+public class NoteListActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.tvSyncToLocal)
     TextView tvSyncToLocal;
@@ -53,6 +57,13 @@ public class NoteListActivity extends BaseActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
+
+//    @BindView(R.id.sdvUserHeadPortrait)
+    SimpleDraweeView sdvUserHeadPortrait;
+//    @BindView(R.id.tvUserName)
+    TextView tvUserName;
+//    @BindView(R.id.llUser)
+    LinearLayout llUser;
 
     private NoteDaoUtil noteDaoUtil;
     private List<Note> noteList = new ArrayList<>();
@@ -104,7 +115,7 @@ public class NoteListActivity extends BaseActivity {
                     noteList = list;
                     noteListAdapter.setData(list);
                     //保存本地数据库
-                    for (Note note: noteList){
+                    for (Note note : noteList) {
                         noteDaoUtil.addOneNote(note);
                     }
                 }
@@ -113,6 +124,7 @@ public class NoteListActivity extends BaseActivity {
     }
 
     private void initNavigationView() {
+
         ColorStateList colorStateList = getResources().getColorStateList(R.color.item_menu_selector);
         navigationview.setItemTextColor(colorStateList);
         navigationview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -150,6 +162,17 @@ public class NoteListActivity extends BaseActivity {
                         break;
                 }
                 return true;
+            }
+        });
+        //init navigationview header
+        llUser= (LinearLayout)navigationview.getHeaderView(0);
+        sdvUserHeadPortrait= (SimpleDraweeView) llUser.findViewById(R.id.sdvUserHeadPortrait);// TODO: 5/25/2017  这里怎么用butterknife
+        tvUserName= (TextView) llUser.findViewById(R.id.tvUserName);
+        llUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoteListActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -202,6 +225,16 @@ public class NoteListActivity extends BaseActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @OnClick({/*R.id.llUser*/})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.llUser:
+
+                break;
+
         }
     }
 }

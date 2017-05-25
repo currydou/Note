@@ -8,7 +8,9 @@ import com.curry.note.bean.book.BookRoot;
  */
 
 public interface IBookView {
-    void showSuccessPage(BookRoot bookRoot);
+    void showLoadingPage();
+
+    void showSuccessPage(BookRoot bookRoot, boolean isLoadMore);
 
     void showFailPage();
 }

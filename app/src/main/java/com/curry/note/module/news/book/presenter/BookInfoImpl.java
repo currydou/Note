@@ -28,7 +28,8 @@ public class BookInfoImpl implements BookInfo {
 
     // TODO: 5/16/2017  先用retrofit，再改成rx，再封装
     @Override
-    public void getList(String tag,int start,int count) {
+    public void getList(String tag, int start, int count, final boolean isLoadMore) {
+        iBookView.showLoadingPage();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.DOUBAN_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -39,7 +40,7 @@ public class BookInfoImpl implements BookInfo {
             @Override
             public void onResponse(Call<BookRoot> call, Response<BookRoot> response) {
                 // TODO: 5/16/2017  这个地方不同情形的判断
-                iBookView.showSuccessPage(response.body());
+                iBookView.showSuccessPage(response.body(), isLoadMore);
                 Log.e("curry", "onResponse: ");
             }
 

@@ -5,5 +5,5 @@ package com.curry.note.module.news.music.presenter;
  */
 
 public interface MusicInfo {
-    void getList(String tag, int start, int count);
+    void getList(String tag, int start, int count,boolean isLoadMore);
 }

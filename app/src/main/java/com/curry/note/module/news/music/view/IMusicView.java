@@ -8,7 +8,7 @@ public interface IMusicView<T> {
     /**
      * 网络请求开始
      */
-    void onStart();
+    void onRequestStart();
 
     /**
      * 网络请求结束
@@ -20,7 +20,7 @@ public interface IMusicView<T> {
      *
      * @param data 返回的数据实体类信息 泛型定义
      */
-    void onSuccess(T data);
+    void onSuccess(T data, boolean isLoadMore);
 
     /**
      * 请求失败

@@ -22,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 动态改变gridLayoutManager的item的宽度
+ * http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0722/3214.html
  * Created by curry.zhang on 5/15/2017.
  */
 
@@ -35,8 +37,8 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final int LOAD_PULL_TO = 1;
     public static final int LOAD_NONE = 2;
     public static final int LOAD_END = 3;
-    private static final int TYPE_TOP = -1;
-    private static final int TYPE_FOOTER = -2;
+    public static final int TYPE_TOP = -1;
+    public static final int TYPE_FOOTER = -2;
     private int status = 1;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -76,8 +78,8 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //绑定视图缓存
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        Books book = booksList.get(position);
         if (holder instanceof ItemViewHolder) {
+            Books book = booksList.get(position);
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.bindItem(book);
         } else if (holder instanceof BookListAdapter.FooterViewHolder) {
@@ -102,7 +104,7 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     //用继承的，不直接用是因为在onCreateViewHolder直接返回new RecyclerView.ViewHolder(view)会报错
-    private class ItemViewHolder extends RecyclerView.ViewHolder {
+    class ItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.sdvFilm)
         SimpleDraweeView sdvFilm;
@@ -143,7 +145,7 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     /**
      * footer view
      */
-    private class FooterViewHolder extends RecyclerView.ViewHolder {
+    class FooterViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_load_prompt)
         TextView tv_load_prompt;
         @BindView(R.id.progress)
@@ -200,5 +202,10 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface OnItemClickListener {
         void onClick(View view, int position, Books book);
+    }
+
+    public void updateLoadStatus(int status) {
+        this.status = status;
+        notifyDataSetChanged();
     }
 }

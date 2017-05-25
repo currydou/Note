@@ -30,7 +30,7 @@ public class MusicInfoImpl implements MusicInfo {
 
     // TODO: 5/16/2017  先用retrofit，再改成rx，再封装
     @Override
-    public void getList(String tag, int start, int count) {
+    public void getList(String tag, int start, int count, final boolean isLoadMore) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.DOUBAN_BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -44,7 +44,7 @@ public class MusicInfoImpl implements MusicInfo {
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        iMusicView.onStart();
+                        iMusicView.onRequestStart();
                     }
                 }).subscribe(new Subscriber<MusicRoot>() {
             @Override
@@ -61,7 +61,7 @@ public class MusicInfoImpl implements MusicInfo {
             @Override
             public void onNext(MusicRoot musicRoot) {
                 if (musicRoot != null) {
-                    iMusicView.onSuccess(musicRoot);
+                    iMusicView.onSuccess(musicRoot, isLoadMore);
                 } else {
                     iMusicView.onFailure(new Exception());//new 一个exception？
                 }

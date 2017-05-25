@@ -5,5 +5,5 @@ package com.curry.note.module.news.movie.presenter;
  */
 
 public interface IMoviePresenter {
-    void getList(String tag, int start, int count);
+    void getList(String tag, int start, int count, boolean isLoadMore);
 }

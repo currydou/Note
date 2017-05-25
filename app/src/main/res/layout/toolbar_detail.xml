@@ -2,31 +2,36 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:skin="http://schemas.android.com/android/andSkin"
-    android:id="@+id/toolBar"
+    android:id="@+id/toolBar_detail"
     android:layout_width="match_parent"
     android:layout_height="54dp"
     android:background="@drawable/bg_image_selector"
     android:minHeight="?attr/actionBarSize"
-    app:navigationIcon="@drawable/ic_menu"
     skin:enable="true">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/back" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/title"
         android:textSize="22sp" />
 
+
     <TextView
-        android:id="@+id/tvSyncToLocal"
+        android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:gravity="center"
         android:layout_marginRight="15dp"
-        android:text="@string/syncToLocal"
+        android:gravity="center"
+        android:text="注册"
         android:textSize="15sp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </android.support.v7.widget.Toolbar>
