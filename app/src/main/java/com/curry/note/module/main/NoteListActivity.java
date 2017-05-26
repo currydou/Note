@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +22,13 @@ import android.widget.TextView;
 import com.curry.note.R;
 import com.curry.note.base.BaseActivity;
 import com.curry.note.bean.bmob.Note;
+import com.curry.note.bean.bmob.User;
 import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
 import com.curry.note.module.login.LoginActivity;
 import com.curry.note.module.news.home.NewsActivity;
+import com.curry.note.util.SPUtils;
+import com.curry.note.util.ToastUtils;
 import com.curry.note.widget.dialog.CardPickerDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rrtoyewx.andskinlibrary.manager.SkinLoader;
@@ -35,8 +40,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 这个activity的功能列表
@@ -58,11 +65,11 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
 
-//    @BindView(R.id.sdvUserHeadPortrait)
+    //    @BindView(R.id.sdvUserHeadPortrait)
     SimpleDraweeView sdvUserHeadPortrait;
-//    @BindView(R.id.tvUserName)
+    //    @BindView(R.id.tvUserName)
     TextView tvUserName;
-//    @BindView(R.id.llUser)
+    //    @BindView(R.id.llUser)
     LinearLayout llUser;
 
     private NoteDaoUtil noteDaoUtil;
@@ -80,8 +87,46 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         initNavigationView();
         initFloatingActionButton();
         initRecyclerView();
-
+//        temp();
     }
+
+    private void temp() {
+        Note note = new Note();
+        note.setUserId("32211b5f3f");
+        note.setNoteContent("content2");
+        note.setTimestamp(System.currentTimeMillis());
+        note.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    Log.i("bmob",""+s);
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage());
+                }
+            }
+        });
+
+
+//        User user = new User();
+//        user.setObjectId("32211b5f3f");
+//        BmobQuery<Test2> query = new BmobQuery<>();
+//        query.addWhereEqualTo("user", user);    // 查询当前用户的所有帖子
+//        query.order("-updatedAt");
+//        query.include("user");// 希望在查询帖子信息的同时也把发布人的信息查询出来
+//        query.findObjects(new FindListener<Test2>() {
+//
+//            @Override
+//            public void done(List<Test2> object, BmobException e) {
+//                if (e == null) {
+//                    Log.i("bmob", object.get(1).getTest() + "成功" + object.get(0).getTest());
+//                } else {
+//                    Log.i("bmob", "失败：" + e.getMessage());
+//                }
+//            }
+//
+//        });
+    }
+
 
     private void initToolbar() {
         setSupportActionBar(toolBar);
@@ -107,20 +152,28 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void syncToLocal() {
-        BmobQuery<Note> noteBmobQuery = new BmobQuery<>();
-        noteBmobQuery.findObjects(new FindListener<Note>() {
-            @Override
-            public void done(List<Note> list, BmobException e) {
-                if (e == null) {
-                    noteList = list;
-                    noteListAdapter.setData(list);
-                    //保存本地数据库
-                    for (Note note : noteList) {
-                        noteDaoUtil.addOneNote(note);
+        User currentUser = BmobUser.getCurrentUser(User.class);
+        if (currentUser == null) {
+            ToastUtils.showShortToast("请先登录");
+        } else {
+            ToastUtils.showShortToast("已经登录");
+            BmobQuery<Note> noteBmobQuery = new BmobQuery<>();
+            noteBmobQuery.addWhereEqualTo("userId", currentUser.getObjectId());
+            noteBmobQuery.findObjects(new FindListener<Note>() {
+                @Override
+                public void done(List<Note> list, BmobException e) {
+                    if (e == null) {
+                        noteList = list;
+                        noteListAdapter.setData(list);
+                        //保存本地数据库
+                        for (Note note : noteList) {
+                            noteDaoUtil.addOneNote(note);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+
     }
 
     private void initNavigationView() {
@@ -157,24 +210,58 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
                         });
                         cardPickerDialog.show(getSupportFragmentManager(), "theme");
                         break;
-                    case R.id.nav_3:
-
+                    case R.id.nav_exit:
+                        onBackPressed();
                         break;
                 }
                 return true;
             }
         });
         //init navigationview header
-        llUser= (LinearLayout)navigationview.getHeaderView(0);
-        sdvUserHeadPortrait= (SimpleDraweeView) llUser.findViewById(R.id.sdvUserHeadPortrait);// TODO: 5/25/2017  这里怎么用butterknife
-        tvUserName= (TextView) llUser.findViewById(R.id.tvUserName);
+        initNavigationHeader();
+    }
+
+    private void initNavigationHeader() {
+        llUser = (LinearLayout) navigationview.getHeaderView(0);
+        sdvUserHeadPortrait = (SimpleDraweeView) llUser.findViewById(R.id.sdvUserHeadPortrait);// TODO: 5/25/2017  这里怎么用butterknife
+        tvUserName = (TextView) llUser.findViewById(R.id.tvUserName);
+        SPUtils spUtils = new SPUtils(SharedTag.SP_USER);
+        final String userName = spUtils.getString(SharedTag.USER_NAME);
+
+        if (!TextUtils.isEmpty(userName)) {
+            //不是空，显示头像，和名字
+            sdvUserHeadPortrait.setImageURI(spUtils.getString(SharedTag.USER_ICON_URL));
+            tvUserName.setText(spUtils.getString(SharedTag.USER_NAME));
+        } else {
+            tvUserName.setText("未登录");
+        }
+
         llUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoteListActivity.this, LoginActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent();
+                if (TextUtils.isEmpty(userName)) {// TODO: 5/26/2017  用id判断
+                    //是空，没有登录，跳到登录界面
+                    intent.setClass(NoteListActivity.this, LoginActivity.class);
+                } else {
+                    //不是空，已经登录，跳到用户信息界面
+                    intent.setClass(NoteListActivity.this, UserInfoActivity.class);
+                }
+                startActivityForResult(intent, 0);
             }
         });
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        SPUtils spUtils = new SPUtils(SharedTag.SP_USER);
+        final String userName = spUtils.getString(SharedTag.USER_NAME);
+        if (!TextUtils.isEmpty(userName)) {
+            //不是空，显示头像，和名字
+            sdvUserHeadPortrait.setImageURI(spUtils.getString(SharedTag.USER_ICON_URL));
+            tvUserName.setText(spUtils.getString(SharedTag.USER_NAME));
+        }
     }
 
     private void initFloatingActionButton() {
@@ -198,7 +285,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View view, int position, Note note) {
                 Intent intent = new Intent();
-                intent.putExtra(SharedTag.NOTE_ID, note.getId());
+                intent.putExtra(SharedTag.NOTE_ID, note.getObjectId());
                 intent.putExtra(SharedTag.TYPE, SharedTag.TYPE_EDIT_NOTE);
                 intent.setClass(NoteListActivity.this, NoteEditActivity.class);
                 startActivity(intent);
@@ -214,6 +301,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         noteList = noteDaoUtil.queryAll();
         noteListAdapter.setData(noteList);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

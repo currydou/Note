@@ -21,6 +21,10 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
+ * 1：当bean增加了新的字段，但是在服务端没有增加，这时候插入，不会报错，但是新增的字段的值也不会插入成功，只会插入已有的字段
+ *      结果：可以这样插入新的字段，要刷新整个页面才能看到
+ *
+ *
  */
 public class BmobUtils {
 

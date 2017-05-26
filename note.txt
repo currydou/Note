@@ -29,3 +29,5 @@ bmob
 webview   js
 
 权限适配(6.0  7.0 )
+
+bug检测

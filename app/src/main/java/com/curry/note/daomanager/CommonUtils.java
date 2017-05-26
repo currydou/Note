@@ -3,9 +3,6 @@ package com.curry.note.daomanager;
 import android.content.Context;
 
 import com.curry.note.bean.bmob.User;
-import com.curry.note.dao.UserDao;
-
-import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
@@ -133,22 +130,22 @@ public class CommonUtils {
      * lt <
      *
      */
-    public List<User> query2(long key) {
-        //查询构建器
-        QueryBuilder<User> builder = manager.getDaoSession().queryBuilder(User.class);
-        //并且
-        builder.where(UserDao.Properties.Id.ge(key)).where(UserDao.Properties.Name.eq("%张三%"));
-        return builder.list();
-    }
+//    public List<User> query2(long key) {
+//        //查询构建器
+//        QueryBuilder<User> builder = manager.getDaoSession().queryBuilder(User.class);
+//        //并且
+//        builder.where(UserDao.Properties.Id.ge(key)).where(UserDao.Properties.Name.eq("%张三%"));
+//        return builder.list();
+//    }
 
     /**
      *
      */
-    public List<User> query3(long key) {
-        QueryBuilder<User> builder = manager.getDaoSession().queryBuilder(User.class);
-        //and和or 同时用
-        builder.where(UserDao.Properties.Id.gt(key),
-                UserDao.Properties.Name.like("%张三%")).limit(2);
-        return builder.list();
-    }
+//    public List<User> query3(long key) {
+//        QueryBuilder<User> builder = manager.getDaoSession().queryBuilder(User.class);
+//        //and和or 同时用
+//        builder.where(UserDao.Properties.Id.gt(key),
+//                UserDao.Properties.Name.like("%张三%")).limit(2);
+//        return builder.list();
+//    }
 }

@@ -1,73 +1,47 @@
 package com.curry.note.bean.bmob;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 import cn.bmob.v3.BmobObject;
 
 /**
- *
  * Created by curry on 2017/5/14.
+ * <p>
+ * 如果bean父类有字段，虽然生成的代码没有显示的把父类字段的值插入，但是查询的时候可以获取到
+ * <p>
+ * todo 之前看databinding时，记得说过第三方封装的不好弄，通过什么方式，然后就可以了。
+ * 1.现在我想用bomb的objectid作为greendao的主键，需要在objectid(不能重写)上加上注解，不知道这种方式可不可以
+ * 2.不知道是不是只能用主键来删除？
  */
 
 @Entity
-public class Note extends BmobObject{
+public class Note extends BmobObject {
+
+    private String noteContent;//便签内容
     @Id
-    private Long id;
-    private String userName;
-    private String title;
-    private String noteContent;
-    private Long timestamp;
-    @Transient
-    private int tempUsageCount; // not persisted
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Long timestamp;//用时间戳做主键，用于数据库删除
+    private String userId;//所属用户的id
+
     public Note() {
     }
 
-    public Note(Long id, String noteContent, Long timestamp) {
-        this.id = id;
+
+    @Generated(hash = 625575019)
+    public Note(String noteContent, Long timestamp, String userId) {
         this.noteContent = noteContent;
         this.timestamp = timestamp;
+        this.userId = userId;
     }
 
-    public Note(Long id, String userName, String title, String noteContent, Long timestamp, int tempUsageCount) {
-        this.id = id;
-        this.userName = userName;
-        this.title = title;
-        this.noteContent = noteContent;
-        this.timestamp = timestamp;
-        this.tempUsageCount = tempUsageCount;
-    }
-    @Generated(hash = 1956976561)
-    public Note(Long id, String userName, String title, String noteContent, Long timestamp) {
-        this.id = id;
-        this.userName = userName;
-        this.title = title;
-        this.noteContent = noteContent;
-        this.timestamp = timestamp;
+
+    public String getUserId() {
+        return userId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getNoteContent() {
@@ -86,11 +60,5 @@ public class Note extends BmobObject{
         this.timestamp = timestamp;
     }
 
-    public int getTempUsageCount() {
-        return tempUsageCount;
-    }
 
-    public void setTempUsageCount(int tempUsageCount) {
-        this.tempUsageCount = tempUsageCount;
-    }
 }
