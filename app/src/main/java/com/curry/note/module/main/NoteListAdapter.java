@@ -95,6 +95,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
     }
 
     public void setData(List<Note> noteList) {
+        //顺序倒过来
         Collections.reverse(noteList);
         this.noteList = noteList;
         notifyDataSetChanged();

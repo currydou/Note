@@ -285,7 +285,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View view, int position, Note note) {
                 Intent intent = new Intent();
-                intent.putExtra(SharedTag.NOTE_ID, note.getObjectId());
+                intent.putExtra(SharedTag.NOTE_ID, note.getTimestamp());
                 intent.putExtra(SharedTag.TYPE, SharedTag.TYPE_EDIT_NOTE);
                 intent.setClass(NoteListActivity.this, NoteEditActivity.class);
                 startActivity(intent);

@@ -14,8 +14,10 @@ import com.curry.note.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class NoteEditActivity extends BaseActivity {
 
@@ -52,7 +54,7 @@ public class NoteEditActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        saveNote();
+        saveNote();
     }
 
     private void saveNote() {
@@ -62,13 +64,13 @@ public class NoteEditActivity extends BaseActivity {
             //新增类型，退出之后不是空就保存本地和服务器
             if (!TextUtils.isEmpty(etNoteContent)) {
                 //不是空，并且修改过内容
-                saveLocalAndServer();
+//                saveLocalAndServer();
             }
         }
         if (operateType == SharedTag.TYPE_EDIT_NOTE) {
             //编辑类型，退出之后不是空就保存更新;删掉之前的note
             if (!TextUtils.isEmpty(etNoteContent)) {
-                saveLocalAndServer();
+//                saveLocalAndServer();
             }
             deleteOldNote();
         }
@@ -85,6 +87,7 @@ public class NoteEditActivity extends BaseActivity {
         Note note = new Note();
         note.setNoteContent(etNoteContent);
         note.setTimestamp(System.currentTimeMillis());
+        note.setUserId(BmobUser.getCurrentUser().getObjectId());
         noteDaoUtil.addOneNote(note);
         saveServer(note);
     }
@@ -92,9 +95,9 @@ public class NoteEditActivity extends BaseActivity {
     private void deleteOldNote() {
         //删掉原来的
         Note note = new Note();
-//        note.setId(note_id);
+        note.setTimestamp(note_id);
         noteDaoUtil.deleteUser(note);
-        deleteServer(note);
+        deleteServer();
     }
 
     // TODO: 5/18/2017  服务器同步失败的话，设想应该保存note下次什么时候再同步
@@ -113,38 +116,19 @@ public class NoteEditActivity extends BaseActivity {
         });
     }
 
-    // TODO: 5/18/2017  看看能不能用一个id
-    private void deleteServer(Note note) {
-//1        1：先根据id查询到objectid
-//        BmobQuery<Note> query = new BmobQuery<>();
-//        //查询playerName叫“比目”的数据
-//        query.addWhereEqualTo("id", note.getOb这里要改);
-//        //返回50条数据，如果不加上这条语句，默认返回10条数据
-//        query.setLimit(10);
-//        query.findObjects(new FindListener<Note>() {
-//            @Override
-//            public void done(List<Note> noteList, BmobException e) {
-//                if (e == null) {
-//                    ToastUtils.showShortToast("查询成功：共" + noteList.size() + "条数据。");
-//                    //取第0条
-//                    Note note = noteList.get(0);
-////2                    2：根据objectid删除这条note
-//                    note.delete(new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e == null) {
-//                                ToastUtils.showShortToast("delete success");
-//                                // TODO: 5/18/2017  是不是应该打印日志  日志工具类，toast工具类找一个合适的
-//                            } else {
-//                                ToastUtils.showShortToast("delete fail");
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-//                }
-//            }
-//        });
+    private void deleteServer() {
+        Note note = noteDaoUtil.queryOne(note_id);
+        note.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    ToastUtils.showShortToast("delete success");
+                    // TODO: 5/18/2017  是不是应该打印日志  日志工具类，toast工具类找一个合适的
+                } else {
+                    ToastUtils.showShortToast("delete fail");
+                }
+            }
+        });
     }
 
 }
