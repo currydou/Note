@@ -77,25 +77,16 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     //绑定视图缓存
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             Books book = booksList.get(position);
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            itemViewHolder.bindItem(book);
+            itemViewHolder.bindItem(book, position);
         } else if (holder instanceof BookListAdapter.FooterViewHolder) {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
             footerViewHolder.bindItem();
         }
 
-        //监听
-        if (listener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onClick(view, position, booksList.get(position));
-                }
-            });
-        }
     }
 
     @Override
@@ -118,7 +109,7 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ButterKnife.bind(this, itemView);
         }
 
-        private void bindItem(Books book) {
+        private void bindItem(Books book, final int position) {
             if (!TextUtils.isEmpty(book.getImages().getLarge())) {
                 Utils.init(context);
                 int screenWidth = ScreenUtils.getScreenWidth();
@@ -137,6 +128,15 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 tvFilmGrade.setText("评分:" + book.getRating().getAverage());
             } else {
                 tvFilmGrade.setText("暂无评分");
+            }
+            //监听
+            if (listener != null) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.onClick(view, position, booksList.get(position));
+                    }
+                });
             }
         }
 

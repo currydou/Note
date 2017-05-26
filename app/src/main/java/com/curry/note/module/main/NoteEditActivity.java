@@ -3,7 +3,6 @@ package com.curry.note.module.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.curry.note.R;
@@ -13,15 +12,10 @@ import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
 import com.curry.note.util.ToastUtils;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 public class NoteEditActivity extends BaseActivity {
 
@@ -58,7 +52,7 @@ public class NoteEditActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        saveNote();
+//        saveNote();
     }
 
     private void saveNote() {
@@ -89,7 +83,6 @@ public class NoteEditActivity extends BaseActivity {
 
     private void saveLocalAndServer() {
         Note note = new Note();
-        note.setId(System.currentTimeMillis());
         note.setNoteContent(etNoteContent);
         note.setTimestamp(System.currentTimeMillis());
         noteDaoUtil.addOneNote(note);
@@ -99,7 +92,7 @@ public class NoteEditActivity extends BaseActivity {
     private void deleteOldNote() {
         //删掉原来的
         Note note = new Note();
-        note.setId(note_id);
+//        note.setId(note_id);
         noteDaoUtil.deleteUser(note);
         deleteServer(note);
     }
@@ -123,35 +116,35 @@ public class NoteEditActivity extends BaseActivity {
     // TODO: 5/18/2017  看看能不能用一个id
     private void deleteServer(Note note) {
 //1        1：先根据id查询到objectid
-        BmobQuery<Note> query = new BmobQuery<>();
-        //查询playerName叫“比目”的数据
-        query.addWhereEqualTo("id", note.getId());
-        //返回50条数据，如果不加上这条语句，默认返回10条数据
-        query.setLimit(10);
-        query.findObjects(new FindListener<Note>() {
-            @Override
-            public void done(List<Note> noteList, BmobException e) {
-                if (e == null) {
-                    ToastUtils.showShortToast("查询成功：共" + noteList.size() + "条数据。");
-                    //取第0条
-                    Note note = noteList.get(0);
-//2                    2：根据objectid删除这条note
-                    note.delete(new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null) {
-                                ToastUtils.showShortToast("delete success");
-                                // TODO: 5/18/2017  是不是应该打印日志  日志工具类，toast工具类找一个合适的
-                            } else {
-                                ToastUtils.showShortToast("delete fail");
-                            }
-                        }
-                    });
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                }
-            }
-        });
+//        BmobQuery<Note> query = new BmobQuery<>();
+//        //查询playerName叫“比目”的数据
+//        query.addWhereEqualTo("id", note.getOb这里要改);
+//        //返回50条数据，如果不加上这条语句，默认返回10条数据
+//        query.setLimit(10);
+//        query.findObjects(new FindListener<Note>() {
+//            @Override
+//            public void done(List<Note> noteList, BmobException e) {
+//                if (e == null) {
+//                    ToastUtils.showShortToast("查询成功：共" + noteList.size() + "条数据。");
+//                    //取第0条
+//                    Note note = noteList.get(0);
+////2                    2：根据objectid删除这条note
+//                    note.delete(new UpdateListener() {
+//                        @Override
+//                        public void done(BmobException e) {
+//                            if (e == null) {
+//                                ToastUtils.showShortToast("delete success");
+//                                // TODO: 5/18/2017  是不是应该打印日志  日志工具类，toast工具类找一个合适的
+//                            } else {
+//                                ToastUtils.showShortToast("delete fail");
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+//                }
+//            }
+//        });
     }
 
 }

@@ -86,15 +86,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             footerViewHolder.bindItem();
         }
 
-        //监听
-        if (listener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onClick(view, position, subjectsList.get(position));
-                }
-            });
-        }
+
     }
 
     @Override
@@ -121,7 +113,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ButterKnife.bind(this, itemView);
         }
 
-        private void bindItem(Subjects subjects, int position) {
+        private void bindItem(Subjects subjects, final int position) {
             if (!TextUtils.isEmpty(subjects.getImages().getLarge())) {
                 itemSdvFilm.setImageURI(subjects.getImages().getLarge());
             }
@@ -139,7 +131,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             } else {
                 itemTvRank.setText("" + (position + 1));
             }
-
+            //监听
+            if (listener != null) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.onClick(view, position, subjectsList.get(position));
+                    }
+                });
+            }
         }
     }
 

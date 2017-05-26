@@ -24,11 +24,9 @@ public class NoteDao extends AbstractDao<Note, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property UserName = new Property(1, String.class, "userName", false, "USER_NAME");
-        public final static Property Title = new Property(2, String.class, "title", false, "TITLE");
-        public final static Property NoteContent = new Property(3, String.class, "noteContent", false, "NOTE_CONTENT");
-        public final static Property Timestamp = new Property(4, Long.class, "timestamp", false, "TIMESTAMP");
+        public final static Property NoteContent = new Property(0, String.class, "noteContent", false, "NOTE_CONTENT");
+        public final static Property Timestamp = new Property(1, Long.class, "timestamp", true, "_id");
+        public final static Property UserId = new Property(2, String.class, "userId", false, "USER_ID");
     }
 
 
@@ -44,11 +42,9 @@ public class NoteDao extends AbstractDao<Note, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"NOTE\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"USER_NAME\" TEXT," + // 1: userName
-                "\"TITLE\" TEXT," + // 2: title
-                "\"NOTE_CONTENT\" TEXT," + // 3: noteContent
-                "\"TIMESTAMP\" INTEGER);"); // 4: timestamp
+                "\"NOTE_CONTENT\" TEXT," + // 0: noteContent
+                "\"_id\" INTEGER PRIMARY KEY ," + // 1: timestamp
+                "\"USER_ID\" TEXT);"); // 2: userId
     }
 
     /** Drops the underlying database table. */
@@ -61,29 +57,19 @@ public class NoteDao extends AbstractDao<Note, Long> {
     protected final void bindValues(DatabaseStatement stmt, Note entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
-        String userName = entity.getUserName();
-        if (userName != null) {
-            stmt.bindString(2, userName);
-        }
- 
-        String title = entity.getTitle();
-        if (title != null) {
-            stmt.bindString(3, title);
-        }
- 
         String noteContent = entity.getNoteContent();
         if (noteContent != null) {
-            stmt.bindString(4, noteContent);
+            stmt.bindString(1, noteContent);
         }
  
         Long timestamp = entity.getTimestamp();
         if (timestamp != null) {
-            stmt.bindLong(5, timestamp);
+            stmt.bindLong(2, timestamp);
+        }
+ 
+        String userId = entity.getUserId();
+        if (userId != null) {
+            stmt.bindString(3, userId);
         }
     }
 
@@ -91,68 +77,54 @@ public class NoteDao extends AbstractDao<Note, Long> {
     protected final void bindValues(SQLiteStatement stmt, Note entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
-        String userName = entity.getUserName();
-        if (userName != null) {
-            stmt.bindString(2, userName);
-        }
- 
-        String title = entity.getTitle();
-        if (title != null) {
-            stmt.bindString(3, title);
-        }
- 
         String noteContent = entity.getNoteContent();
         if (noteContent != null) {
-            stmt.bindString(4, noteContent);
+            stmt.bindString(1, noteContent);
         }
  
         Long timestamp = entity.getTimestamp();
         if (timestamp != null) {
-            stmt.bindLong(5, timestamp);
+            stmt.bindLong(2, timestamp);
+        }
+ 
+        String userId = entity.getUserId();
+        if (userId != null) {
+            stmt.bindString(3, userId);
         }
     }
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1);
     }    
 
     @Override
     public Note readEntity(Cursor cursor, int offset) {
         Note entity = new Note( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // userName
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // title
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // noteContent
-            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4) // timestamp
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // noteContent
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // timestamp
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // userId
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Note entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setUserName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setTitle(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setNoteContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setTimestamp(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
+        entity.setNoteContent(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setTimestamp(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setUserId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     @Override
     protected final Long updateKeyAfterInsert(Note entity, long rowId) {
-        entity.setId(rowId);
+        entity.setTimestamp(rowId);
         return rowId;
     }
     
     @Override
     public Long getKey(Note entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getTimestamp();
         } else {
             return null;
         }
@@ -160,7 +132,7 @@ public class NoteDao extends AbstractDao<Note, Long> {
 
     @Override
     public boolean hasKey(Note entity) {
-        return entity.getId() != null;
+        return entity.getTimestamp() != null;
     }
 
     @Override

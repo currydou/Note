@@ -74,26 +74,17 @@ public class MusicListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     //绑定视图缓存
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof MusicListAdapter.ItemViewHolder) {
             Musics musics = musicsList.get(position);
             MusicListAdapter.ItemViewHolder itemViewHolder = (MusicListAdapter.ItemViewHolder) holder;
-            itemViewHolder.bindItem(musics);
+            itemViewHolder.bindItem(musics, position);
         } else if (holder instanceof MusicListAdapter.FooterViewHolder) {
             MusicListAdapter.FooterViewHolder footerViewHolder = (MusicListAdapter.FooterViewHolder) holder;
             footerViewHolder.bindItem();
         }
 
-        //监听
-        if (listener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onClick(view, position, musicsList.get(position));
-                }
-            });
-        }
     }
 
     @Override
@@ -118,7 +109,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ButterKnife.bind(this, itemView);
         }
 
-        private void bindItem(Musics musics) {
+        private void bindItem(Musics musics, final int position) {
             if (!TextUtils.isEmpty(musics.getImage())) {
                 itemSdvMusic.setImageURI(musics.getImage());
             }
@@ -131,7 +122,15 @@ public class MusicListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (!TextUtils.isEmpty(musics.getRating().getAverage())) {
                 itemTvMusicArt.setText("评分:" + musics.getRating().getAverage());
             }
-
+            //监听
+            if (listener != null) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.onClick(view, position, musicsList.get(position));
+                    }
+                });
+            }
         }
     }
 
