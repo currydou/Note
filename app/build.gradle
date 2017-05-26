@@ -11,6 +11,7 @@ buildscript {
     dependencies {
         classpath 'org.greenrobot:greendao-gradle-plugin:3.1.0'
     }
+
 }
 greendao {
     schemaVersion 1
@@ -19,6 +20,18 @@ greendao {
 }
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'mobilesafe'
+            keyPassword '123456'
+            storeFile file('D:/as1/sign/mobilesafe.store.jks')
+            storePassword '123456'
+        }
+    }
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
