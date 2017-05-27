@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
-    <!-- todo 主题和状态栏的关系 -->
     <application
         android:name=".NoteApplication"
         android:allowBackup="true"

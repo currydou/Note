@@ -17,7 +17,7 @@ public class SharedTag {
     public static final int TYPE_ADD_NOTE = 1;
     public static final int TYPE_EDIT_NOTE = 2;
 
-    public static final String NOTE_ID = "NOTE_ID";
+    public static final String NOTE_ID = "note_id";
 
     /**/
 }

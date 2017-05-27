@@ -11,20 +11,34 @@ import cn.bmob.v3.BmobUser;
  */
 
 @Entity
-public class User extends BmobUser{
+public class User extends BmobUser {
     private String headPortraitUrl;
+    private String QQId;
+
     @Generated(hash = 586692638)
     public User() {
     }
+
     public String getHeadPortraitUrl() {
         return this.headPortraitUrl;
     }
+
     public void setHeadPortraitUrl(String headPortraitUrl) {
         this.headPortraitUrl = headPortraitUrl;
     }
-    @Generated(hash = 1728833896)
-    public User(String headPortraitUrl) {
+
+    public String getQQId() {
+        return this.QQId;
+    }
+
+    public void setQQId(String QQId) {
+        this.QQId = QQId;
+    }
+
+    @Generated(hash = 1777243736)
+    public User(String headPortraitUrl, String QQId) {
         this.headPortraitUrl = headPortraitUrl;
+        this.QQId = QQId;
     }
 
 }

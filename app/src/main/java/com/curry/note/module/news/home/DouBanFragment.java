@@ -58,7 +58,6 @@ public class DouBanFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //TODO: 5/17/2017  会执行多次的问题
         //设置TabLayout的模式
         tabLayoutBook.setTabMode(TabLayout.MODE_FIXED);
 

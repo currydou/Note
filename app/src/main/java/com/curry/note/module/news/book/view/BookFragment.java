@@ -78,7 +78,6 @@ public class BookFragment extends DouBanBaseFragment implements IBookView {
         bookInfo = new BookInfoImpl(this);
         bookInfo.getList(tag, pageCount * PAGE_SIZE, PAGE_SIZE, false);
         bookListAdapter = new BookListAdapter(getActivity(), booksList);
-        // TODO: 5/24/2017  下拉加载显示不对
         recyclerViewBook.setAdapter(bookListAdapter);
         gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerViewBook.setLayoutManager(gridLayoutManager);

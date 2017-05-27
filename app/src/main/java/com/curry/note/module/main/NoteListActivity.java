@@ -27,7 +27,6 @@ import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
 import com.curry.note.module.login.LoginActivity;
 import com.curry.note.module.news.home.NewsActivity;
-import com.curry.note.util.SPUtils;
 import com.curry.note.util.ToastUtils;
 import com.curry.note.widget.dialog.CardPickerDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -99,7 +98,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
-                    Log.i("bmob",""+s);
+                    Log.i("bmob", "" + s);
                 } else {
                     Log.i("bmob", "失败：" + e.getMessage());
                 }
@@ -225,13 +224,13 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         llUser = (LinearLayout) navigationview.getHeaderView(0);
         sdvUserHeadPortrait = (SimpleDraweeView) llUser.findViewById(R.id.sdvUserHeadPortrait);// TODO: 5/25/2017  这里怎么用butterknife
         tvUserName = (TextView) llUser.findViewById(R.id.tvUserName);
-        SPUtils spUtils = new SPUtils(SharedTag.SP_USER);
-        final String userName = spUtils.getString(SharedTag.USER_NAME);
-
-        if (!TextUtils.isEmpty(userName)) {
+        //判断用户是否登录，初始化用户信息
+        User currentUser = BmobUser.getCurrentUser(User.class);
+        final String objectId = currentUser.getObjectId();
+        if (!TextUtils.isEmpty(objectId)) {
             //不是空，显示头像，和名字
-            sdvUserHeadPortrait.setImageURI(spUtils.getString(SharedTag.USER_ICON_URL));
-            tvUserName.setText(spUtils.getString(SharedTag.USER_NAME));
+            sdvUserHeadPortrait.setImageURI(currentUser.getHeadPortraitUrl());
+            tvUserName.setText(currentUser.getUsername());
         } else {
             tvUserName.setText("未登录");
         }
@@ -240,29 +239,18 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                if (TextUtils.isEmpty(userName)) {// TODO: 5/26/2017  用id判断
+                if (TextUtils.isEmpty(objectId)) {
                     //是空，没有登录，跳到登录界面
                     intent.setClass(NoteListActivity.this, LoginActivity.class);
                 } else {
                     //不是空，已经登录，跳到用户信息界面
                     intent.setClass(NoteListActivity.this, UserInfoActivity.class);
                 }
-                startActivityForResult(intent, 0);
+                startActivity(intent);
             }
         });
     }
 
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-        SPUtils spUtils = new SPUtils(SharedTag.SP_USER);
-        final String userName = spUtils.getString(SharedTag.USER_NAME);
-        if (!TextUtils.isEmpty(userName)) {
-            //不是空，显示头像，和名字
-            sdvUserHeadPortrait.setImageURI(spUtils.getString(SharedTag.USER_ICON_URL));
-            tvUserName.setText(spUtils.getString(SharedTag.USER_NAME));
-        }
-    }
 
     private void initFloatingActionButton() {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +273,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View view, int position, Note note) {
                 Intent intent = new Intent();
-                intent.putExtra(SharedTag.NOTE_ID, note.getTimestamp());
+                intent.putExtra(SharedTag.NOTE_ID, note.getId());
                 intent.putExtra(SharedTag.TYPE, SharedTag.TYPE_EDIT_NOTE);
                 intent.setClass(NoteListActivity.this, NoteEditActivity.class);
                 startActivity(intent);

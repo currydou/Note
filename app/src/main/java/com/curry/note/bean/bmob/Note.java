@@ -19,22 +19,35 @@ import cn.bmob.v3.BmobObject;
 @Entity
 public class Note extends BmobObject {
 
-    private String noteContent;//便签内容
     @Id
-    private Long timestamp;//用时间戳做主键，用于数据库删除
+    private Long id;//做主键，用于数据库删除
+    private Long timestamp;//用时间戳 （可以用时间戳作为主键，1.麻烦 ；2.容易弄乱）
+    private String noteContent;//便签内容
     private String userId;//所属用户的id
+
 
     public Note() {
     }
 
 
-    @Generated(hash = 625575019)
-    public Note(String noteContent, Long timestamp, String userId) {
-        this.noteContent = noteContent;
+
+    @Generated(hash = 775148314)
+    public Note(Long id, Long timestamp, String noteContent, String userId) {
+        this.id = id;
         this.timestamp = timestamp;
+        this.noteContent = noteContent;
         this.userId = userId;
     }
 
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;

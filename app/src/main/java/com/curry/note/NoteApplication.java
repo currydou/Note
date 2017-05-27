@@ -33,10 +33,8 @@ public class NoteApplication extends Application {
 
     @Override
     public void onCreate() {
-
         super.onCreate();
         Fresco.initialize(this);
-        // TODO: 5/18/2017  这个工具类要项目依赖
         Utils.init(this);
         spUtils = new SPUtils(SharedTag.SP_USER);
         SkinLoader.getDefault().init(this);

@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
  * Created by curry.zhang on 5/15/2017.
  */
 
-// TODO: 5/17/2017  有type，头尾 的区别；用bindview；其他的还写了什么；
 public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;

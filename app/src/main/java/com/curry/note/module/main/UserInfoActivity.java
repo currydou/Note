@@ -36,8 +36,7 @@ public class UserInfoActivity extends BaseActivity {
 
     }
 
-    // TODO: 5/26/2017
-//每次都要授权，并且不是以qq信息作为死的登录名，如果修改了，下次qq登录依然是修改的。
+    // TODO: 5/26/2017 每次都要授权，并且不是以qq信息作为死的登录名，如果修改了，下次qq登录依然是修改的。
     //看莱聚+的，以及其他的
     @OnClick(R.id.tvExit)
     public void onViewClicked(View view) {

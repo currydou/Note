@@ -3,6 +3,7 @@ package com.curry.note.module.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.curry.note.R;
@@ -10,6 +11,7 @@ import com.curry.note.base.BaseActivity;
 import com.curry.note.bean.bmob.Note;
 import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
+import com.curry.note.util.KeyboardUtils;
 import com.curry.note.util.ToastUtils;
 
 import butterknife.BindView;
@@ -24,7 +26,7 @@ public class NoteEditActivity extends BaseActivity {
     @BindView(R.id.etNote)
     EditText etNote;
     private NoteDaoUtil noteDaoUtil;
-    private long note_id;
+    private long noteId;
     private int operateType;
     private String etNoteContent;
 
@@ -33,19 +35,22 @@ public class NoteEditActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
         ButterKnife.bind(this);
-
-        noteDaoUtil = new NoteDaoUtil(this);
-
+        init();
         resolveIntent();
 
-        // TODO: 5/15/2017  进来之后就要启用软键盘
+    }
+
+    private void init() {
+        noteDaoUtil = new NoteDaoUtil(this);
+        // TODO: 5/27/2017  键盘
+        KeyboardUtils.showSoftInput(etNote);
     }
 
     private void resolveIntent() {
         Intent intent = getIntent();
-        note_id = intent.getLongExtra(SharedTag.NOTE_ID, 0);
-        if (note_id != 0) {
-            Note note = noteDaoUtil.queryOne(note_id);
+        noteId = intent.getLongExtra(SharedTag.NOTE_ID, 0);
+        if (noteId != 0) {
+            Note note = noteDaoUtil.queryOne(noteId);
             etNote.setText(note.getNoteContent());
         }
         operateType = intent.getIntExtra(SharedTag.TYPE, 0);
@@ -64,13 +69,13 @@ public class NoteEditActivity extends BaseActivity {
             //新增类型，退出之后不是空就保存本地和服务器
             if (!TextUtils.isEmpty(etNoteContent)) {
                 //不是空，并且修改过内容
-//                saveLocalAndServer();
+                saveLocalAndServer();
             }
         }
         if (operateType == SharedTag.TYPE_EDIT_NOTE) {
             //编辑类型，退出之后不是空就保存更新;删掉之前的note
             if (!TextUtils.isEmpty(etNoteContent)) {
-//                saveLocalAndServer();
+                saveLocalAndServer();
             }
             deleteOldNote();
         }
@@ -79,12 +84,13 @@ public class NoteEditActivity extends BaseActivity {
 
     //内容是否改变
     private boolean isModified() {
-        Note note = noteDaoUtil.queryOne(note_id);
+        Note note = noteDaoUtil.queryOne(noteId);
         return !etNoteContent.equals(note.getNoteContent());
     }
 
     private void saveLocalAndServer() {
         Note note = new Note();
+        note.setId(System.currentTimeMillis());
         note.setNoteContent(etNoteContent);
         note.setTimestamp(System.currentTimeMillis());
         note.setUserId(BmobUser.getCurrentUser().getObjectId());
@@ -93,11 +99,11 @@ public class NoteEditActivity extends BaseActivity {
     }
 
     private void deleteOldNote() {
+        deleteServer();
         //删掉原来的
         Note note = new Note();
-        note.setTimestamp(note_id);
+        note.setId(noteId);
         noteDaoUtil.deleteUser(note);
-        deleteServer();
     }
 
     // TODO: 5/18/2017  服务器同步失败的话，设想应该保存note下次什么时候再同步
@@ -116,16 +122,18 @@ public class NoteEditActivity extends BaseActivity {
         });
     }
 
+    // TODO: 5/27/2017  要先上传才有objectid
+
     private void deleteServer() {
-        Note note = noteDaoUtil.queryOne(note_id);
+        Note note = noteDaoUtil.queryOne(noteId);
         note.delete(new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
                     ToastUtils.showShortToast("delete success");
-                    // TODO: 5/18/2017  是不是应该打印日志  日志工具类，toast工具类找一个合适的
                 } else {
-                    ToastUtils.showShortToast("delete fail");
+                    ToastUtils.showShortToast("delete fail" + e.getMessage());
+                    Log.e("note", e.getMessage());
                 }
             }
         });

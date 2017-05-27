@@ -12,6 +12,7 @@ import com.curry.note.bean.bmob.Note;
 import com.curry.note.util.TimeUtil;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -97,6 +98,19 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
     public void setData(List<Note> noteList) {
         //顺序倒过来
         Collections.reverse(noteList);
+        Collections.sort(noteList, new Comparator<Note>() {
+            @Override
+            public int compare(Note note1, Note note2) {
+                //降序排序
+                if (note1.getTimestamp() > note2.getTimestamp()) {
+                    return -1;
+                }
+                if (note1.getTimestamp() == note2.getTimestamp()) {
+                    return 0;
+                }
+                return 1;
+            }
+        });
         this.noteList = noteList;
         notifyDataSetChanged();
     }

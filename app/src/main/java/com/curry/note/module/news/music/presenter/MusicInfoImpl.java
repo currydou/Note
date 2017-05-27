@@ -28,7 +28,6 @@ public class MusicInfoImpl implements MusicInfo {
         this.iMusicView = iMusicView;
     }
 
-    // TODO: 5/16/2017  先用retrofit，再改成rx，再封装
     @Override
     public void getList(String tag, int start, int count, final boolean isLoadMore) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -37,7 +36,7 @@ public class MusicInfoImpl implements MusicInfo {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DouBanService douBanService = retrofit.create(DouBanService.class);
-        // TODO: 5/17/2017  rx有个类好像一般实际用的比较多，androidmvpsample里用到的
+        //  rx有个类好像一般实际用的比较多，androidmvpsample里用到的
         Observable<MusicRoot> musicRootObservable = douBanService.searchMusicByTag(tag, start, count);
         musicRootObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

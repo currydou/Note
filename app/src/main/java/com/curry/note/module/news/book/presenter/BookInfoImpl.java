@@ -26,7 +26,6 @@ public class BookInfoImpl implements BookInfo {
         this.iBookView = iBookView;
     }
 
-    // TODO: 5/16/2017  先用retrofit，再改成rx，再封装
     @Override
     public void getList(String tag, int start, int count, final boolean isLoadMore) {
         iBookView.showLoadingPage();

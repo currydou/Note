@@ -74,8 +74,6 @@ public class BmobUtils {
             }
         });
     }
-    // TODO: 5/18/2017
-
     /***
      * 添加数据
      *
@@ -94,8 +92,6 @@ public class BmobUtils {
             }
         });
     }
-
-    // TODO: 5/18/2017
 
     /***
      * 删除数据
@@ -122,7 +118,6 @@ public class BmobUtils {
 
     }
 
-// TODO: 5/18/2017
 
     /**
      * 查询数据 （好像会根据实体类自动创建表）
@@ -154,6 +149,7 @@ public class BmobUtils {
         User myUser = new User();
         myUser.setUsername(name);
         myUser.setPassword(password);
+        myUser.setHeadPortraitUrl("11");
         //注意：不能用save方法进行注册
         myUser.signUp(new SaveListener<User>() {
             @Override
