@@ -24,22 +24,20 @@ public class Note extends BmobObject {
     private Long timestamp;//用时间戳 （可以用时间戳作为主键，1.麻烦 ；2.容易弄乱）
     private String noteContent;//便签内容
     private String userId;//所属用户的id
-
+    private Boolean isSaveServer;//是否保存到服务器
 
     public Note() {
     }
 
-
-
-    @Generated(hash = 775148314)
-    public Note(Long id, Long timestamp, String noteContent, String userId) {
+    @Generated(hash = 1711230758)
+    public Note(Long id, Long timestamp, String noteContent, String userId,
+            Boolean isSaveServer) {
         this.id = id;
         this.timestamp = timestamp;
         this.noteContent = noteContent;
         this.userId = userId;
+        this.isSaveServer = isSaveServer;
     }
-
-
 
     public Long getId() {
         return id;
@@ -71,6 +69,14 @@ public class Note extends BmobObject {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Boolean getIsSaveServer() {
+        return this.isSaveServer;
+    }
+
+    public void setIsSaveServer(Boolean isSaveServer) {
+        this.isSaveServer = isSaveServer;
     }
 
 

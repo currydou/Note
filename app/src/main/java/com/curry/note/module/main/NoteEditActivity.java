@@ -2,8 +2,8 @@ package com.curry.note.module.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.curry.note.R;
@@ -12,6 +12,7 @@ import com.curry.note.bean.bmob.Note;
 import com.curry.note.constant.SharedTag;
 import com.curry.note.daomanager.NoteDaoUtil;
 import com.curry.note.util.KeyboardUtils;
+import com.curry.note.util.LogUtil;
 import com.curry.note.util.ToastUtils;
 
 import butterknife.BindView;
@@ -42,8 +43,16 @@ public class NoteEditActivity extends BaseActivity {
 
     private void init() {
         noteDaoUtil = new NoteDaoUtil(this);
-        // TODO: 5/27/2017  键盘
-        KeyboardUtils.showSoftInput(etNote);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                KeyboardUtils.showSoftInput(etNote);
+                //或者下面的
+//                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 500);
     }
 
     private void resolveIntent() {
@@ -52,6 +61,8 @@ public class NoteEditActivity extends BaseActivity {
         if (noteId != 0) {
             Note note = noteDaoUtil.queryOne(noteId);
             etNote.setText(note.getNoteContent());
+            //将光标移到最后
+            etNote.setSelection(note.getNoteContent().length());
         }
         operateType = intent.getIntExtra(SharedTag.TYPE, 0);
     }
@@ -107,25 +118,43 @@ public class NoteEditActivity extends BaseActivity {
     }
 
     // TODO: 5/18/2017  服务器同步失败的话，设想应该保存note下次什么时候再同步
-    private void saveServer(Note note) {
+    private void saveServer(final Note note) {
+        note.setIsSaveServer(true);
         note.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {
                 if (e == null) {
                     //success
                     ToastUtils.showShortToast("备份到服务器成功");
+                    note.setIsSaveServer(true);
+                    //第一次创建的便签没有objectid，设置一下
+                    String localObjectId = note.getObjectId();
+                    if(TextUtils.isEmpty(localObjectId)){
+                        note.setObjectId(objectId);
+                    }
                 } else {
-                    //fail
+                    //fail.失败的时候是没有objectid的。。。
                     ToastUtils.showShortToast("备份到服务器失败");
+                    LogUtil.d("备份到服务器失败" + e.getMessage());
+                    note.setIsSaveServer(false);
                 }
+
+                noteDaoUtil.updateUser(note);
             }
         });
     }
 
-    // TODO: 5/27/2017  要先上传才有objectid
 
+    // 要先上传才有objectid
+    //还是删除的时候提示的没有objectid，新增不需要objectid
+    //没网的时候新增，有网的时候修改功能(增新的，删旧的)，删除功能(删旧的),会有这个提示。(在删旧的的时候，提示没有objectid)
     private void deleteServer() {
         Note note = noteDaoUtil.queryOne(noteId);
+        //如果objectid为空不让删除服务器的？因为服务器上也没有，而且也会报错。对！
+        String objectId = note.getObjectId();
+        if(TextUtils.isEmpty(objectId)){
+            return;
+        }
         note.delete(new UpdateListener() {
             @Override
             public void done(BmobException e) {
@@ -133,7 +162,7 @@ public class NoteEditActivity extends BaseActivity {
                     ToastUtils.showShortToast("delete success");
                 } else {
                     ToastUtils.showShortToast("delete fail" + e.getMessage());
-                    Log.e("note", e.getMessage());
+                    LogUtil.d("delete fail" + e.getMessage());
                 }
             }
         });

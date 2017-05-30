@@ -28,6 +28,7 @@ public class NoteDao extends AbstractDao<Note, Long> {
         public final static Property Timestamp = new Property(1, Long.class, "timestamp", false, "TIMESTAMP");
         public final static Property NoteContent = new Property(2, String.class, "noteContent", false, "NOTE_CONTENT");
         public final static Property UserId = new Property(3, String.class, "userId", false, "USER_ID");
+        public final static Property IsSaveServer = new Property(4, Boolean.class, "isSaveServer", false, "IS_SAVE_SERVER");
     }
 
 
@@ -46,7 +47,8 @@ public class NoteDao extends AbstractDao<Note, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"TIMESTAMP\" INTEGER," + // 1: timestamp
                 "\"NOTE_CONTENT\" TEXT," + // 2: noteContent
-                "\"USER_ID\" TEXT);"); // 3: userId
+                "\"USER_ID\" TEXT," + // 3: userId
+                "\"IS_SAVE_SERVER\" INTEGER);"); // 4: isSaveServer
     }
 
     /** Drops the underlying database table. */
@@ -78,6 +80,11 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (userId != null) {
             stmt.bindString(4, userId);
         }
+ 
+        Boolean isSaveServer = entity.getIsSaveServer();
+        if (isSaveServer != null) {
+            stmt.bindLong(5, isSaveServer ? 1L: 0L);
+        }
     }
 
     @Override
@@ -103,6 +110,11 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (userId != null) {
             stmt.bindString(4, userId);
         }
+ 
+        Boolean isSaveServer = entity.getIsSaveServer();
+        if (isSaveServer != null) {
+            stmt.bindLong(5, isSaveServer ? 1L: 0L);
+        }
     }
 
     @Override
@@ -116,7 +128,8 @@ public class NoteDao extends AbstractDao<Note, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // timestamp
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // noteContent
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // userId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // userId
+            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0 // isSaveServer
         );
         return entity;
     }
@@ -127,6 +140,7 @@ public class NoteDao extends AbstractDao<Note, Long> {
         entity.setTimestamp(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setNoteContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setUserId(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setIsSaveServer(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
      }
     
     @Override

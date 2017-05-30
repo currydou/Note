@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.curry.note.R;
 import com.curry.note.base.BaseActivity;
 import com.curry.note.bean.bmob.User;
+import com.curry.note.constant.SharedTag;
 import com.curry.note.module.main.NoteListActivity;
 import com.curry.note.util.LogUtil;
 import com.curry.note.util.ToastUtils;
@@ -171,7 +172,7 @@ public class LoginActivity extends BaseActivity {
             }
         }
         platform.setPlatformActionListener(new MyPlatformListener());
-        platform.authorize();
+//        platform.authorize();
         platform.showUser(null);
     }
 
@@ -218,7 +219,7 @@ public class LoginActivity extends BaseActivity {
 //        noteApplication.spUtils.getString();spUtils null
 
 
-    private void thirdLogin(Bundle bundle) {
+    private void thirdLogin(final Bundle bundle) {
         String QQId = bundle.getString("QQId");
         String token = bundle.getString("token");
         String expiresIn = bundle.getString("expiresIn");
@@ -232,6 +233,7 @@ public class LoginActivity extends BaseActivity {
                     //登录成功
                     Message msg = Message.obtain();
                     msg.what = UPDATE_INFO;
+                    msg.obj = bundle;
                     handler.sendMessage(msg);
                 }
 
@@ -240,30 +242,41 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void updateInfo(Bundle bundle) {
-        String userName = bundle.getString("userName");
-        String url = bundle.getString("url");
+        final String userName = bundle.getString("userName");
+        final String url = bundle.getString("url");
         String QQId = bundle.getString("QQId");
         User currentUser = BmobUser.getCurrentUser(User.class);
-        if (!TextUtils.isEmpty(currentUser.getQQId())) {
+        final Intent intent = new Intent(LoginActivity.this, NoteListActivity.class);
+        if (TextUtils.isEmpty(currentUser.getQQId())) {
             //第一次用qq登录，用qq昵称和头像
             User user = new User();
             user.setUsername(userName);// TODO: 5/27/2017  qq登录的逻辑走一遍
             user.setHeadPortraitUrl(url);
             user.setQQId(QQId);
-            currentUser.update(currentUser.getObjectId(), new UpdateListener() {
+            user.update(currentUser.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
+                    LogUtil.d("111111111111111");
                     if (e == null) {
+                        intent.putExtra(SharedTag.USER_NAME2, userName);
+                        intent.putExtra(SharedTag.HEAD_PORTRAIT_URL, url);
                         showToast("登录成功");
-                        startActivity(new Intent(LoginActivity.this, NoteListActivity.class));
+                        startActivity(intent);
                         finish();
                     } else {
-                        LogUtil.d("update-" + e.getMessage());
+                        ToastUtils.showLongToast("更新信息失败");
                     }
                 }
             });
 
+        } else {
+            //不是第一次登陆，用已有账户中的信息(传空串，显示已有账户中的信息)
+            intent.putExtra(SharedTag.USER_NAME2, "");
+            showToast("登录成功");
+            startActivity(intent);
+            finish();
         }
+
     }
 
     private void showToast(final String text) {

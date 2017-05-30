@@ -18,6 +18,7 @@ public class BaseActivity extends BaseSkinActivity {
         noteApplication = NoteApplication.getInstance();
         //第一：默认初始化
         Bmob.initialize(this, "be37ef7cc39a53617c68dddd3187f8b0");
+        NoteApplication.getRefWatcher().watch(this);
     }
 
 }
