@@ -13,5 +13,8 @@ public class SharedTag {
 
 
 
+    public static final String USER_NAME2 = "user_name";
+    public static final String HEAD_PORTRAIT_URL = "head_portrait_url";
+
     /**/
 }

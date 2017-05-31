@@ -114,6 +114,7 @@ public class UserDao extends AbstractDao<User, Void> {
 
     @Override
     public boolean hasKey(User entity) {
+        // TODO
         return false;
     }
 
