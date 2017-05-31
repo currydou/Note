@@ -152,7 +152,7 @@ public class BookFragment extends DouBanBaseFragment implements IBookView {
 
     @Override
     public void showSuccessPage(BookRoot bookRoot, boolean isLoadMore) {
-        // TODO: 5/26/2017  在原来有这个页面，重新安装，下面空指针
+        //  在原来有这个页面，重新安装，下面空指针
         swipeRefreshLayout.setRefreshing(false);
         setSuccessPageVisibility(tvLoading, recyclerViewBook, tvLoadError);
         tempList = bookRoot.getBooks();

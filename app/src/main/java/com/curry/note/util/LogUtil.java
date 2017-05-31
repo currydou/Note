@@ -36,7 +36,7 @@ public class LogUtil {
 
     public static void d(String text) {
         if (BuildConfig.DEBUG) {
-            Log.d("notelog", "-->" + text);
+            Log.d("note", "-->" + text);
         }
     }
 }

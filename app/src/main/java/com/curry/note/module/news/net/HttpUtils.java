@@ -1,6 +1,6 @@
 package com.curry.note.module.news.net;
 
-import com.curry.note.constant.Constants;
+import com.curry.note.constant.URLConfig;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -31,7 +31,7 @@ public class HttpUtils {
         if (retrofit == null) {
             synchronized (HttpUtils.class) {
                 if (retrofit == null) {
-                    retrofit = getBuilder(Constants.DOUBAN_BASE_URL).build().create(a);
+                    retrofit = getBuilder(URLConfig.DOUBAN_BASE_URL).build().create(a);
                 }
             }
         }

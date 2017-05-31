@@ -2,11 +2,11 @@ package com.curry.note;
 
 import android.app.Application;
 
-import com.curry.note.constant.SharedTag;
-import com.curry.note.util.SPUtils;
 import com.curry.note.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.rrtoyewx.andskinlibrary.manager.SkinLoader;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -16,9 +16,8 @@ import cn.sharesdk.framework.ShareSDK;
 
 public class NoteApplication extends Application {
 
-    public SPUtils spUtils;
-
     private static NoteApplication instance;
+    private RefWatcher mRefWatcher;
 
     public static NoteApplication getInstance() {
         if (instance == null) {
@@ -36,9 +35,13 @@ public class NoteApplication extends Application {
         super.onCreate();
         Fresco.initialize(this);
         Utils.init(this);
-        spUtils = new SPUtils(SharedTag.SP_USER);
         SkinLoader.getDefault().init(this);
         ShareSDK.initSDK(this);
+        mRefWatcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;
 
+    }
+
+    public static RefWatcher getRefWatcher() {
+        return getInstance().mRefWatcher;
     }
 }

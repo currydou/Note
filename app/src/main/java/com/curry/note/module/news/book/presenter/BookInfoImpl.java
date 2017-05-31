@@ -3,7 +3,7 @@ package com.curry.note.module.news.book.presenter;
 import android.util.Log;
 
 import com.curry.note.bean.book.BookRoot;
-import com.curry.note.constant.Constants;
+import com.curry.note.constant.URLConfig;
 import com.curry.note.module.news.book.view.IBookView;
 import com.curry.note.module.news.net.DouBanService;
 
@@ -30,7 +30,7 @@ public class BookInfoImpl implements BookInfo {
     public void getList(String tag, int start, int count, final boolean isLoadMore) {
         iBookView.showLoadingPage();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.DOUBAN_BASE_URL)
+                .baseUrl(URLConfig.DOUBAN_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DouBanService douBanService = retrofit.create(DouBanService.class);
@@ -38,7 +38,7 @@ public class BookInfoImpl implements BookInfo {
         call.enqueue(new Callback<BookRoot>() {
             @Override
             public void onResponse(Call<BookRoot> call, Response<BookRoot> response) {
-                // TODO: 5/16/2017  这个地方不同情形的判断
+                //  这个地方不同情形的判断
                 iBookView.showSuccessPage(response.body(), isLoadMore);
                 Log.e("curry", "onResponse: ");
             }

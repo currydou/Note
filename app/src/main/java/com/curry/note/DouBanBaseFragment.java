@@ -11,8 +11,9 @@ import com.curry.note.base.LazyBaseFragment2;
  * Created by curry.zhang on 5/25/2017.
  */
 
-// TODO: 5/25/2017  看之前的项目基类的涉及到布局的抽取方式。基类怎么处理布局
-
+//   看之前的项目基类的涉及到布局的抽取方式。基类怎么处理布局，相同的子类同样的更新UI的代码怎么处理
+    /*ldz 方法里传一个父view和子view要更新的内容，用这个view找到子view，再更新*/
+//// TODO: 5/31/2017  显示的是乱码，还有类注释
 public abstract class DouBanBaseFragment extends LazyBaseFragment2 {
 
     protected void setFailPageVisibility(TextView tvLoading, RecyclerView recyclerView, TextView tvLoadError) {

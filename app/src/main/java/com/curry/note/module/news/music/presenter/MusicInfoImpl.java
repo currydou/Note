@@ -2,7 +2,7 @@ package com.curry.note.module.news.music.presenter;
 
 
 import com.curry.note.bean.music.MusicRoot;
-import com.curry.note.constant.Constants;
+import com.curry.note.constant.URLConfig;
 import com.curry.note.module.news.music.view.IMusicView;
 import com.curry.note.module.news.net.DouBanService;
 
@@ -31,7 +31,7 @@ public class MusicInfoImpl implements MusicInfo {
     @Override
     public void getList(String tag, int start, int count, final boolean isLoadMore) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.DOUBAN_BASE_URL)
+                .baseUrl(URLConfig.DOUBAN_BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

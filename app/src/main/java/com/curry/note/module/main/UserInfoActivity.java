@@ -7,13 +7,14 @@ import android.widget.TextView;
 
 import com.curry.note.R;
 import com.curry.note.base.BaseActivity;
-import com.curry.note.constant.SharedTag;
 import com.curry.note.module.login.LoginActivity;
-import com.curry.note.util.SPUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
 
 /**
  * 关于用户功能
@@ -36,15 +37,14 @@ public class UserInfoActivity extends BaseActivity {
 
     }
 
-    // TODO: 5/26/2017 每次都要授权，并且不是以qq信息作为死的登录名，如果修改了，下次qq登录依然是修改的。
-    //看莱聚+的，以及其他的
+    // 每次都要授权，并且不是以qq信息作为死的登录名，如果修改了，下次qq登录依然是修改的。看莱聚+的，以及其他的
     @OnClick(R.id.tvExit)
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvExit:
                 //清除帐号信息，跳到登录界面
-                SPUtils spUtils = new SPUtils(SharedTag.SP_USER);
-                spUtils.clear();
+                BmobUser.logOut();
+                ShareSDK.getPlatform(QQ.NAME).removeAccount(true);
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
