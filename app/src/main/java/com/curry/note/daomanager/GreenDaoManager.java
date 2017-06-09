@@ -18,7 +18,7 @@ public class GreenDaoManager {
     private final static String DB_NAME = "DB_NAME";
     //多线程访问修饰符volatile
     private volatile static GreenDaoManager manager;
-    private static DaoMaster.DevOpenHelper helper;
+    private  DaoMaster.DevOpenHelper helper;
     private static DaoSession daoSession;
     private static DaoMaster daoMaster;
     private Context context;
@@ -27,7 +27,7 @@ public class GreenDaoManager {
      * 初始化上下文
      */
     public void init(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     /**
@@ -104,6 +104,7 @@ public class GreenDaoManager {
     public void closeConnection() {
         closeHelper();
         closeDaoSession();
+        manager = null;
     }
 
 }

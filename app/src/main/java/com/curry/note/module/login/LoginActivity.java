@@ -23,6 +23,7 @@ import com.curry.note.util.ToastUtils;
 
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -63,26 +64,37 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.ivBack)
     ImageView ivBack;
 
-
     public static final int THIRD_LOGIN = 0x11;
     public static final int UPDATE_INFO = 0x12;
 
+    private MyHandler handler = new MyHandler(this);
 
-    Handler handler = new Handler() {
+    // TODO: 6/6/2017  星巴克的handler为什么没有这样写，而且还加了mainlooper参数，本来不就是在activity中，就是主线程吗？？
+    private static class MyHandler extends Handler {
+
+        private final WeakReference<LoginActivity> activityWeakReference;
+
+        MyHandler(LoginActivity loginActivity) {
+            activityWeakReference = new WeakReference<>(loginActivity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (activityWeakReference.get() == null) {
+                return;
+            }
             Bundle bundle = (Bundle) msg.obj;
             switch (msg.what) {
                 case THIRD_LOGIN:
-                    thirdLogin(bundle);
+                    activityWeakReference.get().thirdLogin(bundle);
                     break;
                 case UPDATE_INFO:
-                    updateInfo(bundle);
+                    activityWeakReference.get().updateInfo(bundle);
                     break;
             }
         }
-    };
+    }
 
 
     @Override
@@ -283,4 +295,9 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
 }

@@ -31,7 +31,7 @@ public class MenuPopupWindow extends PopupWindow {
     private void setProperty() {
         // 设置弹窗体宽度，高度
         this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        this.setHeight(300);
+        this.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);
         this.setBackgroundDrawable(new BitmapDrawable());
 //        this.setAnimationStyle(R.style.MyAnimationStyle);

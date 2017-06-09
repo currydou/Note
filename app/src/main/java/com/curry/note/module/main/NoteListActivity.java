@@ -24,7 +24,6 @@ import com.curry.note.bean.bmob.Note;
 import com.curry.note.bean.bmob.User;
 import com.curry.note.constant.Constants;
 import com.curry.note.daomanager.NoteDaoUtil;
-import com.curry.note.module.news.home.NewsActivity;
 import com.curry.note.util.LogUtil;
 import com.curry.note.util.ToastUtils;
 import com.curry.note.widget.dialog.CardPickerDialog;
@@ -50,6 +49,10 @@ import cn.bmob.v3.listener.QueryListListener;
 /**
  * 这个activity的功能列表
  * 1.进来的时候要更新便签列表
+ * <p>
+ * activity context 内存泄漏
+ * http://blog.csdn.net/matrix_xu/article/details/8424554
+ * http://blog.csdn.net/qq_32618417/article/details/51703414
  */
 public class NoteListActivity extends BaseActivity implements View.OnClickListener {
 
@@ -98,6 +101,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         temp();
     }
 
+    // TODO: 6/9/2017  没网的时候进不去！！！
     private void resolveIntent() {
         Intent intent = getIntent();
         userName = intent.getStringExtra(Constants.USER_NAME2);
@@ -105,49 +109,6 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void temp() {
-//        Note note = new Note();
-//        note.setUserId("32211b5f3f");
-//        note.setNoteContent("content2");
-//        note.setTimestamp(System.currentTimeMillis());
-//        note.save(new SaveListener<String>() {
-//            @Override
-//            public void done(String s, BmobException e) {
-//                if (e == null) {
-//                    Log.i("bmob", "" + s);
-//                } else {
-//                    Log.i("bmob", "失败：" + e.getMessage());
-//                }
-//            }
-//        });
-
-//        User user = new User();
-//        user.setUsername("qwe");
-//        user.update(BmobUser.getCurrentUser(User.class).getObjectId(), new UpdateListener() {
-//            @Override
-//            public void done(BmobException e) {
-//                LogUtil.d("111111111111111");
-//            }
-//        });
-
-
-//        User user = new User();
-//        user.setObjectId("32211b5f3f");
-//        BmobQuery<Test2> query = new BmobQuery<>();
-//        query.addWhereEqualTo("user", user);    // 查询当前用户的所有帖子
-//        query.order("-updatedAt");
-//        query.include("user");// 希望在查询帖子信息的同时也把发布人的信息查询出来
-//        query.findObjects(new FindListener<Test2>() {
-//
-//            @Override
-//            public void done(List<Test2> object, BmobException e) {
-//                if (e == null) {
-//                    Log.i("bmob", object.get(1).getTest() + "成功" + object.get(0).getTest());
-//                } else {
-//                    Log.i("bmob", "失败：" + e.getMessage());
-//                }
-//            }
-//
-//        });
     }
 
 
@@ -180,7 +141,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
                             unloadToServer();
                         }
                     }
-                }).showAsDropDown(tvMenu, 0, 0);
+                }).showAsDropDown(tvMenu, 0, 10);
             }
         });
 
@@ -265,7 +226,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
                 drawerLayout.closeDrawers();
                 switch (item.getItemId()) {
                     case R.id.nav_1:
-                        startActivity(new Intent(NoteListActivity.this, NewsActivity.class));
+//                        startActivity(new Intent(NoteListActivity.this, NewsActivity.class));
                         break;
                     case R.id.nav_2:
                         final CardPickerDialog cardPickerDialog = new CardPickerDialog();
@@ -380,6 +341,12 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        noteDaoUtil.closeDB();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
         switch (item.getItemId()) {
@@ -401,4 +368,6 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
 
         }
     }
+
+    // TODO: 6/8/2017  退出前先把drawer退出
 }

@@ -12,13 +12,13 @@ import java.util.List;
 
 public class NoteDaoUtil {
 
+    // TODO: 6/5/2017  数据库的关闭
+
     private final GreenDaoManager manager;
-    private Context context;
 
     public NoteDaoUtil(Context context) {
         manager = GreenDaoManager.getInstance();
         manager.init(context);
-        this.context = context;
     }
 
     public boolean addOneNote(Note note) {
@@ -74,5 +74,9 @@ public class NoteDaoUtil {
      */
     public Note queryOne(Long id) {
         return manager.getDaoSession().load(Note.class, id);
+    }
+
+    public void closeDB() {
+        manager.closeConnection();
     }
 }
