@@ -1,2 +1,23 @@
-1.权限
-http://www.apkbus.com/home.php?mod=space&uid=904057&do=blog&id=68120
+
+2.java基础。类，对象，数据类型，标识符规则，直接量，数组，组合。-------------常量池，编译，String，==，equals？
+	   java三大基本特征，封装，继承，多态
+	   关键字 this，static，final，
+	   内存 数组 直接量 变量(局部，成员) 对象  对象和垃圾回收。。。
+	   类相关 方法 构造器 单例  抽象类 接口 内部类
+	   枚举类
+	   基础类库 Scanner System Runntime Object StringBuffer() Math 日期相关类 及格式化日期。。
+	   工具类 Arrays  Collections 线程安全集合类
+	   集合	概念 继承关系 Iterator 常用的相似的集合类的优缺点 性能
+	   泛型 看java文件夹
+	   异常
+	   文件/流
+	   多线程
+	   网络编程
+	   注解
+	   类加载机制/反射
+	   动态代理
+	   其他  lambda 正则
+3.设计模式
+
+4.Android
+1.权限	做过6.0的权限适配，7.0的应用私有目录被限制访问，没做过适配
