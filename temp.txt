@@ -7,28 +7,49 @@
 	   枚举类
 	   基础类库 Scanner System Runntime Object StringBuffer() Math 日期相关类 及格式化日期。。
 	   工具类 Arrays  Collections 线程安全集合类
-	   集合	概念 继承关系 Iterator 常用的相似的集合类的优缺点 性能
-	   泛型 看java文件夹
+	   集合	概念 继承关系 有哪些具体实现类 区别 Iterator 常用的相似的集合类的优缺点 性能
+	   泛型 看java文件夹 泛型擦除
 	   异常
 	   文件/流
 	   多线程
 	   网络编程
-还没看 注解
+     还没看 注解
 	   类加载机制/反射
 	   动态代理
 	   其他  lambda 正则
+     简单看看  JVM， GC
+
 3.设计模式
 
 4.Android
 	权限	做过6.0的权限适配，7.0的应用私有目录被限制访问，没做过适配
-	基础 四大组件，
+	基础 四大组件，fragment
 	屏幕适配
-	自定义View/事件传递机制
+	3.4.2-View的事件体系(自定义View/事件传递机制)
 	性能方面
-	简历上的技术；项目  准备
-	开发方式。。。
+	编程思想 设计模式体现的 数据库ORM AOP IOC	...
+	什么框架的原理	Volley，EventBus （必须看一个，好吹牛逼）
+	-Handler消息机制 HandlerThread的实现
+	线程和线程池
+	IPC
 	
-	编程思想 设计模式体现的 数据库ORM AOP ...
 
 
---先再看一下《Android群英传》，《Android开发探索艺术》
+	简历上的技术；项目  准备
+	各种开发方式。。。
+	
+--先再看一下《Android群英传》，《Android开发探索艺术》binder机制
+	
+看别人的面试经历
+
+
+双锁原理 volatile原理 静态内部类实现单例的原理 hashmap的实现原理(如何解决冲突的)
+进程和线程的区别 死锁 Serializable和Parcelable的区别 下拉Listview的实现及优化
+LRUCache算法的实现
+
+
+以后再看的
+	java： 《jvm原理》，
+	数据结构(二叉树) 算法()
+	Android： opengl，surfaceView，长连接
+	网络：网络五层结构，TCP和UDP 三次握手和四次挥手
