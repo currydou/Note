@@ -92,7 +92,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_note_list);
         ButterKnife.bind(this);
 
-        noteDaoUtil = new NoteDaoUtil(this);
+
         resolveIntent();
         initToolbar();
         initNavigationView();
@@ -100,6 +100,8 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         initRecyclerView();
         temp();
     }
+
+
 
     // TODO: 6/9/2017  没网的时候进不去！！！
     private void resolveIntent() {
@@ -145,7 +147,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
             }
         });
 
-        tvUnloadFail.setText("未同步服服务器" + noteListFail.size() + "条");
+        tvUnloadFail.setText("未同步服务器" + noteListFail.size() + "条");
     }
 
     private void syncToLocal() {// TODO: 2017/5/29  更新UI抽取，初始化调一次，请求道数据调一次
@@ -321,6 +323,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onStart() {
         super.onStart();
+        noteDaoUtil = new NoteDaoUtil(this);
         updateUI();
     }
 
@@ -337,12 +340,18 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
                 noteListFail.add(note);
             }
         }
-        tvUnloadFail.setText("未同步服服务器" + noteListFail.size() + "条");
+        tvUnloadFail.setText("未同步服务器" + noteListFail.size() + "条");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+//
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         noteDaoUtil.closeDB();
     }
 
