@@ -5,9 +5,51 @@ HTTPS 流的上传和下载 配置超时 IPv6和连接池
 无缝的支持GZIP来减少数据流量
 缓存响应数据来减少重复的网络请求
 
-
+几大核心子系统；路由、连接协议、拦截器、代理、安全性认证、连接池以及网络适配
 核心入口client、cache、interceptor、网络配置、连接池、平台适配性
 
 
 拓展(设计模式)：
 Builder模式，门面模式，桥接模式，Single的模式，观察者模式
+Java的SSLSocket SSLSocketFactory
+
+
+
+重要的类 ： 
+1.Route
+2.Platform
+3.Connnection
+4.ConnnectionPool
+5.Request
+6.Response
+7.Call
+8.Dispatcher
+9.HttpEngine
+10.Internal
+11.Cache
+12.OkHttpClient
+
+
+具体功能点，注意点
+有同步和异步请求，同步请求通过Call.execute()直接返 回当前的Response 。enqueue为OkHttp提供的异步方法
+对于超过1MB的响应body，应使用流的方式来处理body。
+OkHttp现阶段不提供异步api来接收响应体。
+提取响应头
+post方式提交 String；流；文件；表单；分块请求
+响应缓存
+取消一个Call
+超时
+每个call的配置		代理设置、超时设置、缓存设置
+处理验证		AUTH 
+
+
+---拦截器的作用：
+通常情况下拦截器用来添加，移除或者转换请求或者回应的头部信息。
+---HttpEngine：
+在HttpEngine中主要是各种链路和地址的选择，还有一个Transport比较重要
+
+
+
+疑问：
+1.平台适应性，用反射，对于反射性能低的取舍
+
