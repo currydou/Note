@@ -152,13 +152,15 @@ public class XCFlowLayout extends ViewGroup {
 
     /**
      * 与当前ViewGroup对应的LayoutParams
+     * 在计算宽度时，我们需要获取到每个子View的margin值，但是由于ViewGroup本身是没有LayoutParams的，
+     * 所以这里模仿了下LinearLayout的方法，来获取MarginLayoutParams：
      */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MarginLayoutParams(getContext(), attrs);
     }
 
-    public  int dip2px(Context context, float dpValue) {
+    public int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }

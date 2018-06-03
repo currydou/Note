@@ -1,4 +1,28 @@
 
-1、adapter数据，视图的绑定；(这样item的布局可以由用户自己定义；)
-2、选中数据的保存
-3、单选、多选模式
+---------------前面有-的，是采用的，没有的是觉得暂时没什么用，或者不需要的---------------------
+-1、adapter数据，视图的绑定；(这样item的布局可以由用户自己定义；)
+-2、选中数据的保存(用什么集合，怎么删除)---------------------------看网上别的怎么分析的；看ListView等的源码--LongSparseArray
+-3、单选、多选模式(设置了选中个数)，
+4、gravity
+5、TagView的选中状态自定义了一个View，实现了Checkable接口
+6、itemview设置选中；数据记录选中
+7、adapter里暴露一个选中规则的方法
+8、是否删减
+9、选中状态的传递tagview的实现；
+    能不能在getview里获取选中状态(外面嵌套的遮层framelayout的选中状态能不能获取)；
+    可以在getview得到checkedlist来改变布局里选中的复杂的view状态
+10、选中的view放在flowlayout里面，选中的数据放在adapter里面
+11、listview能不能这样用checkable接口，在item布局里面使用selector？
+
+选中监听传出去的集合是复制了一个新的集合 new HashSet<Integer>(mSelectedView)
+
+
+选中考虑：
+list记录position
+1、总数不增减，只记录选中状态：yes
+2、总数会增减。涉及到刷新view的问题。没有选中的list的，只有一个list/
+                        1、removeallview；2、删除选中的view(好像也没有问题，view删除view；list移除position)
+3、不缓存view的话
+
+
+listview: adapter 里有什么方法，给listview使用的，有什么用处

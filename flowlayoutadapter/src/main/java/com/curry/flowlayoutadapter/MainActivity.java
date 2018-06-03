@@ -2,12 +2,11 @@ package com.curry.flowlayoutadapter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.curry.flowlayoutadapter.v2.BaseAdapter;
+import com.curry.flowlayoutadapter.v2.TestTagAdapter;
 import com.curry.flowlayoutadapter.v2.XCFlowLayout2;
 
 import java.util.ArrayList;
@@ -28,35 +27,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         mStrList = new ArrayList<>();
-        mStrList.add("JUSTH HELLO!");
-        mStrList.add("JUSTH HEJUSTH HELLO!LLO!");
-        mStrList.add("JUSTH LLO!");
-        mStrList.add("JUSTH HEJUSTH HELLO!LLO!");
-        mStrList.add("JUSTH HELLO!");
-        mStrList.add("JUSTLO!");
-        mStrList.add("JUSTH HELLO!");
-        mStrList.add("JUSTH HEJUSTH HELLO!LLO!");
-        mStrList.add("JUSTH HELO!");
-        mStrList.add("JUSTH HELLO!");
+        for (int i = 0; i < 10; i++) {
+            mStrList.add("" + i + "   qqqq");
+        }
     }
 
     private void initView() {
 
         mLayoutInflater = LayoutInflater.from(this);
 
-        flowLayout.setAdapter(new BaseAdapter() {
+        flowLayout.setAdapter(new TestTagAdapter(this,mStrList));
+        flowLayout.setOnTagClickListener(new XCFlowLayout2.OnTagClickListener() {
             @Override
-            public int getCount() {
-                return mStrList.size();
-            }
-
-            @Override
-            public View getView(int position, ViewGroup parent) {
-                View view = mLayoutInflater.inflate(R.layout.layout_textview, parent, false);
-                ((TextView) view.findViewById(R.id.item_textview)).setText(mStrList.get(position));
-                return view;
+            public boolean onTagClick(int position, View view, XCFlowLayout2 parent) {
+//                Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                Log.e("mainactivity", "onTagClick: " + position);
+                parent.remove(position);
+                return false;
             }
         });
+        flowLayout.setmSelectedMax(1);
     }
+
+
+
 
 }

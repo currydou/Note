@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.curry.flowlayoutadapter.R;
@@ -146,8 +147,8 @@ public class XCFlowLayoutItem extends XCFlowLayout {
 
     public void addView(TagItem tagItem) {
 // TODO: 2017/12/6  警告的合适的处理方式
-        MarginLayoutParams lp = new MarginLayoutParams(
-                MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
+                ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
         lp.leftMargin = 10;
         lp.rightMargin = 10;
         lp.topMargin = 10;
@@ -160,7 +161,7 @@ public class XCFlowLayoutItem extends XCFlowLayout {
         setUnSelected(view);
         view.setGravity(Gravity.CENTER);
 //        view.setTextSize(Utils.sp2px(mContext,13));
-        view.setOnClickListener(new OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -233,8 +234,8 @@ public class XCFlowLayoutItem extends XCFlowLayout {
 
     public void addView2(String text) {
 //        feeTags.removeAllViews();
-        MarginLayoutParams lp = new MarginLayoutParams(
-                MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
+                ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
         lp.leftMargin = 10;
         lp.rightMargin = 10;
         lp.topMargin = 10;
