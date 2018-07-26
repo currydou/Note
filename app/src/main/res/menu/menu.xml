@@ -15,7 +15,8 @@
             android:id="@+id/nav_1"
             android:title="娱乐" />
      <item
-            android:title="娱乐" />
+         android:id="@+id/nav_4"
+            android:title="字体" />
      <item
             android:title="娱乐" />
      <item

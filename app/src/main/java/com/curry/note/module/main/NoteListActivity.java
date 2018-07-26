@@ -1,7 +1,9 @@
 package com.curry.note.module.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,7 +103,6 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
         initRecyclerView();
         temp();
     }
-
 
 
     // TODO: 6/9/2017  没网的时候进不去！！！
@@ -218,6 +220,7 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
 
 
     private void initNavigationView() {
+        // TODO: 2017/8/15  换了账号显示之前的数据？？？
 
         ColorStateList colorStateList = getResources().getColorStateList(R.color.item_menu_selector);
         navigationview.setItemTextColor(colorStateList);
@@ -254,12 +257,27 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
                     case R.id.nav_exit:
                         onBackPressed();
                         break;
+                    case R.id.nav_4:
+                        changeTextSize(NoteListActivity.this, 0.3f);
+                        finish();
+                        startActivity(new Intent(NoteListActivity.this, NoteListActivity.class));
+                        break;
                 }
                 return true;
             }
         });
         //init navigationview header
         initNavigationHeader();
+    }
+
+
+    public void changeTextSize(Activity activity, float multiple) {
+        Configuration configuration = getResources().getConfiguration();
+        configuration.fontScale = multiple;    //1为标准字体，multiple为放大的倍数
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        displayMetrics.scaledDensity = configuration.fontScale * displayMetrics.density;
+        getBaseContext().getResources().updateConfiguration(configuration, displayMetrics);
     }
 
     private void initNavigationHeader() {
@@ -352,7 +370,8 @@ public class NoteListActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        noteDaoUtil.closeDB();
+// TODO: 2017/8/4  什么时候关闭？？？
+//        noteDaoUtil.closeDB();
     }
 
     @Override

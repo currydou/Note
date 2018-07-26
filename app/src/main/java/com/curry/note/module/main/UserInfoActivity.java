@@ -23,6 +23,10 @@ import cn.sharesdk.tencent.qq.QQ;
  *
  * 希望这个app简单一点，同时练到常用的功能
  * 可以提供两条选择，一种正常的，一种简单的
+ *
+ *
+ *
+ *
  */
 public class UserInfoActivity extends BaseActivity {
 

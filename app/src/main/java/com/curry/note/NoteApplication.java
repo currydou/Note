@@ -5,6 +5,7 @@ import android.app.Application;
 import com.curry.note.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.rrtoyewx.andskinlibrary.manager.SkinLoader;
+import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -16,7 +17,7 @@ import cn.sharesdk.framework.ShareSDK;
 public class NoteApplication extends Application {
 
     private static NoteApplication instance;
-    private static RefWatcher mRefWatcher;
+    private  RefWatcher mRefWatcher;
 
 //    public static NoteApplication getInstance() {
 //        if (instance == null) {
@@ -39,7 +40,7 @@ public class NoteApplication extends Application {
         SkinLoader.getDefault().init(this);
         ShareSDK.initSDK(this);
 //        CrashHandler.getInstance().init(this);
-//        mRefWatcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;
+        mRefWatcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;
 
     }
 
