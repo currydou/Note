@@ -1,13 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+apply from: "config.gradle"
 buildscript {
+    ext.kotlin_version = '1.2.71'
+    ext.navigationVersion = '1.0.0-alpha05'
     repositories {
-        jcenter()
+        //jcenter()
+        //下载auto-value(在项目的 Gradle 文件里，配置国内源（将 jcenter（）注掉或者删掉)
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath'org.greenrobot:greendao-gradle-plugin:3.1.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -15,9 +25,16 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        //jcenter()
+        //下载auto-value(在项目的 Gradle 文件里，配置国内源（将 jcenter（）注掉或者删掉)
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
         //Bmob的maven仓库地址--必填
         maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 

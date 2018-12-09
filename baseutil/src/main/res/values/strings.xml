@@ -1,0 +1,6 @@
+<resources>
+    <string name="b_database_name" translatable="false">eclaim-db</string>
+    <string name="bLoading">正在处理请稍后...</string>
+    <color name="bSnackBar">#3296FA</color>
+    <color name="bSnackBarText">#FFFFFF</color>
+</resources>

@@ -37,7 +37,7 @@ public class NoteApplication extends Application {
         super.onCreate();
         Fresco.initialize(this);
         Utils.init(this);
-        SkinLoader.getDefault().init(this);
+//        SkinLoader.getDefault().init(this);
         ShareSDK.initSDK(this);
 //        CrashHandler.getInstance().init(this);
         mRefWatcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;

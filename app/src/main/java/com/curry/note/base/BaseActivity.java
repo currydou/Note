@@ -1,13 +1,11 @@
 package com.curry.note.base;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.curry.note.NoteApplication;
-import com.rrtoyewx.andskinlibrary.base.BaseSkinActivity;
 
-import cn.bmob.v3.Bmob;
-
-public class BaseActivity extends BaseSkinActivity {
+public class BaseActivity extends AppCompatActivity {
 
     protected NoteApplication noteApplication;
 

@@ -1,18 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 /*意思是所有的子项目或者所有的modules都可以从这个配置文件中读取内容。
 android节点读取ext中android对应项，dependencies读取dependencies对应项，如果配置有变化就可以只在config.gradle中修改，是不是很方便进行配置的管理呢？*/
 //apply from: "config.gradle"
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.1.0'
-    }
-
-}
 greendao {
     schemaVersion 1
     daoPackage 'com.curry.note.dao'
@@ -32,14 +23,14 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
         applicationId "com.curry.note"
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -52,63 +43,65 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    //    compile 'com.android.support:support-v4:25.0.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    api rootProject.ext.dependencies["appcompat-v7"]
+//    api 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     //数据库
-    compile 'org.greenrobot:greendao:3.1.0'
-    compile 'org.greenrobot:greendao-generator:3.1.0'
+    implementation rootProject.ext.dependencies["greendao"]
     //
-    testCompile 'junit:junit:4.12'
+    testApi 'junit:junit:4.12'
     //空指针http://blog.csdn.net/panhongzhi02/article/details/60141377
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    api rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     //
-    compile 'com.android.support:design:25.1.0'
-    compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
+    api rootProject.ext.dependencies["design"]
+    api 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
     //
     //    compile 'com.squareup.okhttp3:okhttp:3.8.0'
     //    compile 'com.squareup.okio:okio:1.13.0'
-    compile('com.squareup.retrofit2:retrofit:2.1.0') {
+    api('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude group: 'com.squareup.okhttp3'
     }
-    compile('com.squareup.retrofit2:converter-gson:2.1.0') {
+    api('com.squareup.retrofit2:converter-gson:2.1.0') {
         exclude group: 'com.google.code.gson'
         exclude group: 'com.squareup.okhttp3'
     }
-    compile('com.squareup.retrofit2:adapter-rxjava:2.1.0') {
+    api('com.squareup.retrofit2:adapter-rxjava:2.1.0') {
         exclude group: 'io.reactivex'
         exclude group: 'com.squareup.okhttp3'
     }
     //    compile 'io.reactivex:rxandroid:1.1.0'
     //    compile 'io.reactivex:rxjava:1.1.0'
     //    compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.facebook.fresco:fresco:0.12.0'
+    api 'com.facebook.fresco:fresco:0.12.0'
     //
-    compile 'cn.bmob.android:http-legacy:1.0'
+    api 'cn.bmob.android:http-legacy:1.0'
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     //3.5.5：请务必查看下面注释[1]
-    compile 'cn.bmob.android:bmob-sdk:3.5.5'
+    api 'cn.bmob.android:bmob-sdk:3.5.5'
     //换肤
-    compile 'com.rrtoyewx.andskinlibrary:andskinlibrary:1.0.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+//    api ('com.rrtoyewx.andskinlibrary:andskinlibrary:1.0.0'){
+//        exclude group: 'com.android.support'
+//    }
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
 
-    compile files('libs/MobCommons-2016.0830.1940.jar')
-    compile files('libs/MobTools-2016.0830.1940.jar')
-    compile files('libs/ShareSDK-Core-2.7.7.jar')
-    compile files('libs/ShareSDK-QQ-2.7.7.jar')
-    compile files('libs/ShareSDK-QZone-2.7.7.jar')
-    compile files('libs/ShareSDK-SinaWeibo-2.7.7.jar')
-    compile files('libs/ShareSDK-Wechat-2.7.7.jar')
-    compile files('libs/ShareSDK-Wechat-Core-2.7.7.jar')
-    compile files('libs/ShareSDK-Wechat-Favorite-2.7.7.jar')
-    compile files('libs/ShareSDK-Wechat-Moments-2.7.7.jar')
+//    api  project(':baseutil')
+
+    api files('libs/MobCommons-2016.0830.1940.jar')
+    api files('libs/MobTools-2016.0830.1940.jar')
+    api files('libs/ShareSDK-Core-2.7.7.jar')
+    api files('libs/ShareSDK-QQ-2.7.7.jar')
+    api files('libs/ShareSDK-QZone-2.7.7.jar')
+    api files('libs/ShareSDK-SinaWeibo-2.7.7.jar')
+    api files('libs/ShareSDK-Wechat-2.7.7.jar')
+    api files('libs/ShareSDK-Wechat-Core-2.7.7.jar')
+    api files('libs/ShareSDK-Wechat-Favorite-2.7.7.jar')
+    api files('libs/ShareSDK-Wechat-Moments-2.7.7.jar')
 }
 /*依赖冲突相关问题
 http://www.jianshu.com/p/8d02da77c83d
