@@ -134,6 +134,7 @@ public class XCFlowLayout2 extends XCFlowLayout {
         }
     }
 
+
     public void remove(int position) {
         /*
         //删除单个的，原来的缓存view的监听参数不是最新的

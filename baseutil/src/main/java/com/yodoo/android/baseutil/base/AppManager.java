@@ -23,7 +23,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import timber.log.Timber;
 
 /**
  * Created by lib on 2017/7/25.
@@ -77,7 +76,7 @@ public final class AppManager {
                 appExit();
                 break;
             default:
-                Timber.tag(TAG).w("The message.what not match");
+//                Timber.tag(TAG).w("The message.what not match");
                 break;
         }
     }
@@ -98,7 +97,7 @@ public final class AppManager {
      */
     public void showSnackbar(String message, boolean isLong) {
         if (getCurrentActivity() == null) {
-            Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
+//            Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
             return;
         }
         View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
@@ -120,7 +119,7 @@ public final class AppManager {
      */
     public void startActivity(Intent intent) {
         if (getCurrentActivity() == null) {
-            Timber.tag(TAG).w("mCurrentActivity == null when startActivity(Intent)");
+//            Timber.tag(TAG).w("mCurrentActivity == null when startActivity(Intent)");
             //如果没有前台的activity就使用new_task模式启动activity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mApplication.startActivity(intent);
@@ -210,7 +209,7 @@ public final class AppManager {
      */
     public void removeActivity(Activity activity) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when removeActivity(Activity)");
+//            Timber.tag(TAG).w("mActivityList == null when removeActivity(Activity)");
             return;
         }
         synchronized (AppManager.class) {
@@ -227,7 +226,7 @@ public final class AppManager {
      */
     public Activity removeActivity(int location) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when removeActivity(int)");
+//            Timber.tag(TAG).w("mActivityList == null when removeActivity(int)");
             return null;
         }
         synchronized (AppManager.class) {
@@ -245,7 +244,7 @@ public final class AppManager {
      */
     public void killActivity(Class<?> activityClass) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when killActivity");
+//            Timber.tag(TAG).w("mActivityList == null when killActivity");
             return;
         }
         for (Activity activity : mActivityList) {
@@ -264,7 +263,7 @@ public final class AppManager {
      */
     public boolean activityInstanceIsLive(Activity activity) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when activityInstanceIsLive");
+//            Timber.tag(TAG).w("mActivityList == null when activityInstanceIsLive");
             return false;
         }
         return mActivityList.contains(activity);
@@ -279,7 +278,7 @@ public final class AppManager {
      */
     public boolean activityClassIsLive(Class<?> activityClass) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when activityClassIsLive");
+//            Timber.tag(TAG).w("mActivityList == null when activityClassIsLive");
             return false;
         }
         for (Activity activity : mActivityList) {

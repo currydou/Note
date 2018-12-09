@@ -16,7 +16,6 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import timber.log.Timber;
 
 public class PermissionUtil {
     public static final String TAG = "Permission";
@@ -69,17 +68,17 @@ public class PermissionUtil {
                             for (Permission p : permissions) {
                                 if (!p.granted) {
                                     if (p.shouldShowRequestPermissionRationale) {
-                                        Timber.tag(TAG).d("Request permissions failure");
+//                                        Timber.tag(TAG).d("Request permissions failure");
                                         requestPermission.onRequestPermissionFailure(Arrays.asList(p.name));
                                         return;
                                     } else {
-                                        Timber.tag(TAG).d("Request permissions failure with ask never again");
+//                                        Timber.tag(TAG).d("Request permissions failure with ask never again");
                                         requestPermission.onRequestPermissionFailureWithAskNeverAgain(Arrays.asList(p.name));
                                         return;
                                     }
                                 }
                             }
-                            Timber.tag(TAG).d("Request permissions success");
+//                            Timber.tag(TAG).d("Request permissions success");
                             requestPermission.onRequestPermissionSuccess();
                         }
                     });

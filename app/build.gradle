@@ -43,54 +43,19 @@ android {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     //
-    api rootProject.ext.dependencies["appcompat-v7"]
-//    api 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-    //数据库
-    implementation rootProject.ext.dependencies["greendao"]
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
     //
-    testApi 'junit:junit:4.12'
-    //空指针http://blog.csdn.net/panhongzhi02/article/details/60141377
-    api rootProject.ext.dependencies["butterknife"]
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    implementation 'com.facebook.fresco:fresco:0.12.0'
     //
-    api rootProject.ext.dependencies["design"]
-    api 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
-    //
-    //    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    //    compile 'com.squareup.okio:okio:1.13.0'
-    api('com.squareup.retrofit2:retrofit:2.1.0') {
-        exclude group: 'com.squareup.okhttp3'
-    }
-    api('com.squareup.retrofit2:converter-gson:2.1.0') {
-        exclude group: 'com.google.code.gson'
-        exclude group: 'com.squareup.okhttp3'
-    }
-    api('com.squareup.retrofit2:adapter-rxjava:2.1.0') {
-        exclude group: 'io.reactivex'
-        exclude group: 'com.squareup.okhttp3'
-    }
-    //    compile 'io.reactivex:rxandroid:1.1.0'
-    //    compile 'io.reactivex:rxjava:1.1.0'
-    //    compile 'com.google.code.gson:gson:2.6.2'
-    api 'com.facebook.fresco:fresco:0.12.0'
-    //
-    api 'cn.bmob.android:http-legacy:1.0'
+//    implementation 'cn.bmob.android:http-legacy:1.0'
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     //3.5.5：请务必查看下面注释[1]
-    api 'cn.bmob.android:bmob-sdk:3.5.5'
+    implementation 'cn.bmob.android:bmob-sdk:3.5.5'
     //换肤
-//    api ('com.rrtoyewx.andskinlibrary:andskinlibrary:1.0.0'){
-//        exclude group: 'com.android.support'
-//    }
-    debugImplementation rootProject.ext.dependencies["canary-debug"]
-    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    implementation 'com.rrtoyewx.andskinlibrary:andskinlibrary:1.0.0'
 
-//    api  project(':baseutil')
+    api  project(':baseutil')
 
     api files('libs/MobCommons-2016.0830.1940.jar')
     api files('libs/MobTools-2016.0830.1940.jar')
@@ -108,8 +73,8 @@ http://www.jianshu.com/p/8d02da77c83d
 https://docs.gradle.org/current/userguide/userguide_single.html#sec:listing_dependencies
 http://blog.csdn.net/u014137988/article/details/52588037
 最后因为下面两个的版本号改过，和之前的不一样
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    api 'com.android.support:appcompat-v7:25.1.0'
+    api 'com.android.support:recyclerview-v7:25.1.0'
 依赖报告： gradlew -q app:dependencies
 Error:Execution failed for task ':app:transformClassesWithJarMergingForDebug'.
 > com.android.build.api.transform.TransformException: java.util.zip.ZipException: duplicate entry: android/support/v4/os/BuildCompat.class

@@ -6,8 +6,6 @@ import android.view.KeyEvent;
 
 import com.yodoo.android.baseutil.R;
 
-import timber.log.Timber;
-
 /**
  * Created by libin-com on 2017/12/13.
  */
@@ -38,10 +36,10 @@ public class DefaultProgressDialog implements ProgressDialog {
                     return false;
                 }
             });
-            Timber.d("create progress dialog " + mDialog.toString());
+//            Timber.d("create progress dialog " + mDialog.toString());
         }
         mDialog.show();
-        Timber.d("show progress dialog " + mDialog.toString());
+//        Timber.d("show progress dialog " + mDialog.toString());
     }
 
     @Override
@@ -61,17 +59,17 @@ public class DefaultProgressDialog implements ProgressDialog {
                     return false;
                 }
             });
-            Timber.d("create progress dialog " + mDialog.toString());
+//            Timber.d("create progress dialog " + mDialog.toString());
         }
         mDialog.show();
-        Timber.d("show progress dialog " + mDialog.toString());
+//        Timber.d("show progress dialog " + mDialog.toString());
     }
 
     @Override
     public void dismissProgressDialog() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
-            Timber.d("dismiss progress dialog " + mDialog.toString());
+//            Timber.d("dismiss progress dialog " + mDialog.toString());
         }
     }
 
@@ -80,9 +78,9 @@ public class DefaultProgressDialog implements ProgressDialog {
         if (mDialog != null) {
             if (mDialog.isShowing()) {
                 mDialog.dismiss();
-                Timber.d("show progress dialog " + mDialog.toString());
+//                Timber.d("show progress dialog " + mDialog.toString());
             }
-            Timber.d("destroy progress dialog " + mDialog.toString());
+//            Timber.d("destroy progress dialog " + mDialog.toString());
             mDialog = null;
         }
     }

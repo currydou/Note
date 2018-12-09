@@ -22,7 +22,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
-import timber.log.Timber;
 
 /**
  * Created by lib on 2017/7/19.
@@ -51,7 +50,7 @@ public class RequestInterceptor implements Interceptor {
         try {
             originalResponse = chain.proceed(request);
         } catch (Exception e) {
-            Timber.w("Http Error: " + e);
+//            Timber.w("Http Error: " + e);
             throw e;
         }
         long t2 = System.nanoTime();
@@ -100,8 +99,8 @@ public class RequestInterceptor implements Interceptor {
             bodyString = parseContent(responseBody, encoding, clone);
             LogUtils.json(bodyString);
         } else {
-            Timber.tag(getTag(request, "Response_Result")).w(responseBody.string());
-            Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
+//            Timber.tag(getTag(request, "Response_Result")).w(responseBody.string());
+//            Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
         }
         return bodyString;
     }

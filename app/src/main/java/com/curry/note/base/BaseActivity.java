@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.curry.note.NoteApplication;
 
+import cn.bmob.v3.Bmob;
+
 public class BaseActivity extends AppCompatActivity {
 
     protected NoteApplication noteApplication;
@@ -22,6 +24,7 @@ public class BaseActivity extends AppCompatActivity {
 //        其他的项目一般没在application里new 实例，都是用的时候直接getInstance()
         //第一：默认初始化
         Bmob.initialize(this, "be37ef7cc39a53617c68dddd3187f8b0");
+
 //        RefWatcher refWatcher = NoteApplication.getRefWatcher(this);
 //        refWatcher.watch(this);
     }

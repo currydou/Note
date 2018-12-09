@@ -3,7 +3,7 @@ package com.curry.note.module.news.net;
 import com.curry.note.constant.URLConfig;
 
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+//import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -44,7 +44,7 @@ public class HttpUtils {
         builder.baseUrl(baseUrl);//设置远程地址
 //        builder.addConverterFactory(new NullOnEmptyConverterFactory());
         builder.addConverterFactory(GsonConverterFactory.create());
-        builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+//        builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
         return builder;
     }
 

@@ -6,18 +6,16 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.yodoo.android.baseutil.R;
+import com.yodoo.android.baseutil.imageloader.BaseImageLoaderStrategy;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
-
-import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.yodoo.android.baseutil.R;
-import com.yodoo.android.baseutil.imageloader.BaseImageLoaderStrategy;
 
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideImageConfig>, GlideAppliesOptions {
 
@@ -109,6 +107,6 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
 
     @Override
     public void applyGlideOptions(Context context, GlideBuilder builder) {
-        Timber.w("GlideImageLoaderStrategy applyGlideOptions");
+//        Timber.w("GlideImageLoaderStrategy applyGlideOptions");
     }
 }

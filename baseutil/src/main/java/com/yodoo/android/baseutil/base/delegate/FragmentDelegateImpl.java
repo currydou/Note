@@ -3,18 +3,17 @@ package com.yodoo.android.baseutil.base.delegate;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
+
+import com.yodoo.android.baseutil.base.App;
+import com.yodoo.android.baseutil.base.IFragment;
 
 import org.simple.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.yodoo.android.baseutil.base.App;
-import com.yodoo.android.baseutil.base.IFragment;
-import timber.log.Timber;
 
 /**
  * Created by lib on 2017/7/25.
@@ -89,7 +88,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             } catch (IllegalStateException e) {
                 e.printStackTrace();
                 //fix Bindings already cleared
-                Timber.w("onDestroyView: " + e.getMessage());
+//                Timber.w("onDestroyView: " + e.getMessage());
             }
         }
     }

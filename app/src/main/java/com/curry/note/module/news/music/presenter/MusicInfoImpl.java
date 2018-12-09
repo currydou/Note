@@ -1,19 +1,7 @@
 package com.curry.note.module.news.music.presenter;
 
 
-import com.curry.note.bean.music.MusicRoot;
-import com.curry.note.constant.URLConfig;
 import com.curry.note.module.news.music.view.IMusicView;
-import com.curry.note.module.news.net.DouBanService;
-
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -30,7 +18,7 @@ public class MusicInfoImpl implements MusicInfo {
 
     @Override
     public void getList(String tag, int start, int count, final boolean isLoadMore) {
-        Retrofit retrofit = new Retrofit.Builder()
+        /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URLConfig.DOUBAN_BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -65,7 +53,7 @@ public class MusicInfoImpl implements MusicInfo {
                     iMusicView.onFailure(new Exception());//new 一个exception？
                 }
             }
-        });
+        });*/
     }
 
 
