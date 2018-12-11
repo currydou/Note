@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="b_tag_position" type="id" />
+    <item name="b_tag_id" type="id" />
+    <item name="b_tag_arg1" type="id" />
+    <item name="b_tag_arg2" type="id" />
+    <item name="b_tag_arg3" type="id" />
+    <item name="b_tag_arg4" type="id" />
+    <item name="b_tag_arg5" type="id" />
+    <item name="b_tag_glide_image" type="id" />
+</resources>

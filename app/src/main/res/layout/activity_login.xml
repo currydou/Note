@@ -8,7 +8,9 @@
 
     <include layout="@layout/toolbar_detail" />
 
+
     <LinearLayout
+        android:id="@+id/llLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -78,5 +80,11 @@
             android:textSize="16.0sp"
             android:visibility="gone" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/llLogin" />
 
 </RelativeLayout>

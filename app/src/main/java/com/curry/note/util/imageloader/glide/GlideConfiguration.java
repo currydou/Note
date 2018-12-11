@@ -1,4 +1,4 @@
-package com.yodoo.android.baseutil.imageloader.glide;
+package com.curry.note.util.imageloader.glide;
 
 import android.content.Context;
 

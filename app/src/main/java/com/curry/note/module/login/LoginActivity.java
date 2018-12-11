@@ -20,6 +20,9 @@ import com.curry.note.constant.Constants;
 import com.curry.note.module.main.NoteListActivity;
 import com.curry.note.util.LogUtil;
 import com.curry.note.util.ToastUtils;
+import com.curry.note.util.imageloader.ImageLoader;
+import com.curry.note.util.imageloader.glide.GlideImageConfig;
+import com.curry.note.util.imageloader.glide.GlideImageLoaderStrategy;
 
 import org.json.JSONObject;
 
@@ -45,24 +48,16 @@ import cn.sharesdk.tencent.qq.QQ;
  */
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
-    @BindView(R.id.tvRegister)
-    TextView tvRegister;
-    @BindView(R.id.etUserName)
-    EditText etUserName;
-    @BindView(R.id.etPassword)
-    EditText etPassword;
-    @BindView(R.id.btnLogin)
-    Button btnLogin;
-    @BindView(R.id.qq_account)
-    TextView qqAccount;
-    @BindView(R.id.sina_weibo)
-    TextView sinaWeibo;
-    @BindView(R.id.qq_weixin)
-    TextView qqWeixin;
-    @BindView(R.id.ivBack)
-    ImageView ivBack;
+    @BindView(R.id.tvTitle) TextView tvTitle;
+    @BindView(R.id.tvRegister) TextView tvRegister;
+    @BindView(R.id.etUserName) EditText etUserName;
+    @BindView(R.id.etPassword) EditText etPassword;
+    @BindView(R.id.btnLogin) Button btnLogin;
+    @BindView(R.id.qq_account) TextView qqAccount;
+    @BindView(R.id.sina_weibo) TextView sinaWeibo;
+    @BindView(R.id.qq_weixin) TextView qqWeixin;
+    @BindView(R.id.ivBack) ImageView ivBack;
+    @BindView(R.id.imageView) ImageView imageView;
 
     public static final int THIRD_LOGIN = 0x11;
     public static final int UPDATE_INFO = 0x12;
@@ -107,6 +102,13 @@ public class LoginActivity extends BaseActivity {
             Log.e("curry1-getObjectId1", currentUser.getObjectId());
         }
         initData();
+
+
+        ImageLoader imageLoader = new ImageLoader(new GlideImageLoaderStrategy());
+        imageLoader.loadImage(this, GlideImageConfig.builder()
+                .url("https://upload-images.jianshu.io/upload_images/3385286-4e9aa5fa367341f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/601/format/webp")
+                .imageView(imageView)
+                .build());
 
     }
 

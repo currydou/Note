@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
-apply plugin: 'org.greenrobot.greendao'
+//apply plugin: 'org.greenrobot.greendao'
 //apply from: '../outputconfig.gradle'
 //apply plugin: 'com.jakewharton.butterknife'
 android {
@@ -29,15 +29,15 @@ android {
 //    }
     resourcePrefix "b"
 }
-greendao {
-    schemaVersion rootProject.ext.android["databaseVersion"]
-}
+//greendao {
+//    schemaVersion rootProject.ext.android["databaseVersion"]
+//}
 dependencies {
-//    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     //support
-    api(rootProject.ext.dependencies["support-v4"]) {
-        exclude module: 'support-annotations'
-    }
+//    api(rootProject.ext.dependencies["support-v4"]) {
+//        exclude module: 'support-annotations'
+//    }
 //    api(rootProject.ext.dependencies["appcompat-v7"]) {
 //        exclude module: 'support-annotations'
 //        exclude module: 'support-v4'
@@ -47,9 +47,9 @@ dependencies {
 //        exclude module: 'appcompat-v7'
 //        exclude module: 'support-v4'
 //    }
-    api rootProject.ext.dependencies["annotations"]
-    api rootProject.ext.dependencies["paging"]
-    api rootProject.ext.dependencies["pagingRxjava2"]
+//    api rootProject.ext.dependencies["annotations"]
+//    api rootProject.ext.dependencies["paging"]
+//    api rootProject.ext.dependencies["pagingRxjava2"]
 //    //view
 //    api(rootProject.ext.dependencies["autolayout"]) {
 //        exclude group: 'com.android.support'
@@ -66,54 +66,54 @@ dependencies {
 //    api(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
 //        exclude module: 'gson'
 //    }
-    api(rootProject.ext.dependencies["rxlifecycle2"]) {
-        exclude module: 'rxjava'
-        exclude module: 'jsr305'
-    }
-    api(rootProject.ext.dependencies["rxlifecycle2-components"]) {
-        exclude module: 'support-v4'
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-annotations'
-        exclude module: 'rxjava'
-        exclude module: 'rxandroid'
-        exclude module: 'rxlifecycle'
-    }
-    api(rootProject.ext.dependencies["rxpermissions2"]) {
-        exclude module: 'rxjava'
-        exclude module: 'support-annotations'
-    }
-    api(rootProject.ext.dependencies['rxerrorhandler2']) {
-        exclude module: 'rxjava'
-        exclude module: 'appcompat-v7'
-    }
+//    api(rootProject.ext.dependencies["rxlifecycle2"]) {
+//        exclude module: 'rxjava'
+//        exclude module: 'jsr305'
+//    }
+//    api(rootProject.ext.dependencies["rxlifecycle2-components"]) {
+//        exclude module: 'support-v4'
+//        exclude module: 'appcompat-v7'
+//        exclude module: 'support-annotations'
+//        exclude module: 'rxjava'
+//        exclude module: 'rxandroid'
+//        exclude module: 'rxlifecycle'
+//    }
+//    api(rootProject.ext.dependencies["rxpermissions2"]) {
+//        exclude module: 'rxjava'
+//        exclude module: 'support-annotations'
+//    }
+//    api(rootProject.ext.dependencies['rxerrorhandler2']) {
+//        exclude module: 'rxjava'
+//        exclude module: 'appcompat-v7'
+//    }
 //    //network
-    api(rootProject.ext.dependencies["retrofit"]) {
-        exclude module: 'okhttp'
-        exclude module: 'okio'
-    }
-    api(rootProject.ext.dependencies["retrofit-converter-gson"]) {
-        exclude module: 'gson'
-        exclude module: 'okhttp'
-        exclude module: 'okio'
-        exclude module: 'retrofit'
-    }
-    api(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
-        exclude module: 'rxjava'
-        exclude module: 'okhttp'
-        exclude module: 'retrofit'
-        exclude module: 'okio'
-    }
-    api rootProject.ext.dependencies["okhttp3"]
+//    api(rootProject.ext.dependencies["retrofit"]) {
+//        exclude module: 'okhttp'
+//        exclude module: 'okio'
+//    }
+//    api(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+//        exclude module: 'gson'
+//        exclude module: 'okhttp'
+//        exclude module: 'okio'
+//        exclude module: 'retrofit'
+//    }
+//    api(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+//        exclude module: 'rxjava'
+//        exclude module: 'okhttp'
+//        exclude module: 'retrofit'
+//        exclude module: 'okio'
+//    }
+//    api rootProject.ext.dependencies["okhttp3"]
 //    //glide
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["glide-loader-okhttp3"]
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
 //    //tools
-    compileOnly rootProject.ext.dependencies["javax.annotation"]
+//    compileOnly rootProject.ext.dependencies["javax.annotation"]
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    api rootProject.ext.dependencies["androideventbus"]
-    api rootProject.ext.dependencies["gson"]
+//    api rootProject.ext.dependencies["androideventbus"]
+//    api rootProject.ext.dependencies["gson"]
 //    //test
 //    api rootProject.ext.dependencies["timber"]
 //    testImplementation rootProject.ext.dependencies["mockito-core"]
@@ -125,17 +125,17 @@ dependencies {
     testImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    debugApi rootProject.ext.dependencies["canary-debug"]
-    releaseApi rootProject.ext.dependencies["canary-release"]
+//    debugApi rootProject.ext.dependencies["canary-debug"]
+//    releaseApi rootProject.ext.dependencies["canary-release"]
 //    testImplementation rootProject.ext.dependencies["canary-release"]
-    api rootProject.ext.dependencies["multidex"]
-    api rootProject.ext.dependencies["greendao"]
-    api rootProject.ext.dependencies["butterknife"]
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+//    api rootProject.ext.dependencies["multidex"]
+//    api rootProject.ext.dependencies["greendao"]
+//    api rootProject.ext.dependencies["butterknife"]
+//    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
 //    api rootProject.ext.dependencies["cardview-v7"]
 //    api rootProject.ext.dependencies["date-picker"]
 //    api rootProject.ext.dependencies["constraint-layout"]
-    api rootProject.ext.dependencies["design"]
+//    api rootProject.ext.dependencies["design"]
 //    api rootProject.ext.dependencies["navigationFragmentKTX"]
 //    api rootProject.ext.dependencies["navigationUiKTX"]
 ////    api rootProject.ext.dependencies["mpAndroidChart"]

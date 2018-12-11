@@ -1,10 +1,10 @@
 package com.curry.note;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.curry.note.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.rrtoyewx.andskinlibrary.manager.SkinLoader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -34,6 +34,7 @@ public class NoteApplication extends Application {
 
     @Override
     public void onCreate() {
+        MultiDex.install(this);
         super.onCreate();
         Fresco.initialize(this);
         Utils.init(this);

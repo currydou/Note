@@ -1,1 +1,1 @@
-include ':app', /*':flowlayoutadapter',*/ ':baseutil'
+include ':app'/*, ':flowlayoutadapter'*/, ':baseutil'
